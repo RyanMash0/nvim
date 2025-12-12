@@ -9,6 +9,9 @@ vim.keymap.set('n', '-', ',')
 vim.keymap.set('n', ',', '<Nop>')
 vim.g.mapleader = ","
 
+-- Definition
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+
 -- Completion
 -- vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
 -- vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
@@ -35,14 +38,14 @@ vim.keymap.set('n', L..'ds', ':DeleteSurround<CR>')
 -- ChangeSurround
 vim.keymap.set('n', L..'cs', ':ChangeSurround<CR>')
 
--- Surround Insert
-vim.keymap.set('i', '(<CR>', '<Esc>:PreSurround (<CR>')
-vim.keymap.set('i', '[<CR>', '<Esc>:PreSurround [<CR>')
-vim.keymap.set('i', '{<CR>', '<Esc>:PreSurround {<CR>')
-vim.keymap.set('i', '{ <CR>', '<Esc>:PreSurround { <CR>')
-vim.keymap.set('i', '<<CR>', '<Esc>:PreSurround <<CR>')
-vim.keymap.set('i', '\"<CR>', '<Esc>:PreSurround \"<CR>')
-vim.keymap.set('i', '\'<CR>', '<Esc>:PreSurround \'<CR>')
+-- -- PreSurround
+-- vim.keymap.set('i', '(<CR>', '<Esc>:PreSurround (<CR>')
+-- vim.keymap.set('i', '[<CR>', '<Esc>:PreSurround [<CR>')
+-- vim.keymap.set('i', '{<CR>', '<Esc>:PreSurround {<CR>')
+-- vim.keymap.set('i', '{ <CR>', '<Esc>:PreSurround { <CR>')
+-- vim.keymap.set('i', '<<CR>', '<Esc>:PreSurround <<CR>')
+-- vim.keymap.set('i', '\"<CR>', '<Esc>:PreSurround \"<CR>')
+-- vim.keymap.set('i', '\'<CR>', '<Esc>:PreSurround \'<CR>')
 
 -- Color Column
 vim.keymap.set('n', L..'c+', ':set colorcolumn=80<CR>')
@@ -57,3 +60,4 @@ vim.keymap.set('n', L..'h', '<Cmd>Telescope help_tags<CR>')
 vim.keymap.set('n', L..'lg', '<Cmd>Telescope live_grep <CR>')
 vim.keymap.set('n', L..'rf', '<Cmd>Telescope find_files '..r..'<CR>')
 vim.keymap.set('n', L..'rlg', '<Cmd>Telescope live_grep '..r..'<CR>')
+vim.keymap.set('n', L..'fb', '<Cmd>Telescope buffers<CR>')

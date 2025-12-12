@@ -6,11 +6,11 @@ return {
 		},
 		config = function ()
 			local telescope = require('telescope')
-			local search_dirs = {
-        '**/Dropbox/Personal/text_files/**',
-				'**/Dropbox/UNC/**',
-				'/\\.config/**',
-			}
+			-- local search_dirs = {
+			-- 	'**/Dropbox/Personal/text_files/**',
+			-- 	'**/Dropbox/UNC/**',
+			-- 	'/\\.config/**',
+			-- }
 
 			local exclude_dirs = {
 				'**/lazy/**',
@@ -46,9 +46,9 @@ return {
 
 			local find_args = { 'rg', '--files', '--hidden' }
 
-			for i = 1, #search_dirs, 1 do
-				find_args[#find_args + 1] = '--glob='..search_dirs[i]
-			end
+			-- for i = 1, #search_dirs, 1 do
+			-- 	find_args[#find_args + 1] = '--glob='..search_dirs[i]
+			-- end
 
 			for i = 1, #exclude_dirs, 1 do
 				find_args[#find_args + 1] = '--glob=!'..exclude_dirs[i]
@@ -66,14 +66,14 @@ return {
 				defaults = {
 					mappings = {
 						i = {
-							['<C-h>'] = 'move_selection_previous',
-							['<C-l>'] = 'move_selection_next',
+							['<C-l>'] = 'move_selection_previous',
+							['<C-h>'] = 'move_selection_next',
 						},
 					},
 				},
 				pickers = {
 					find_files = {
-						cwd = '~',
+						-- cwd = '~',
 						find_command = find_args,
 					}
 				}

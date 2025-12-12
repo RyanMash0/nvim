@@ -17,31 +17,20 @@ function FindPair(chars)
 	local fPairFlags = 'Wn'
 	local bPairFlags = fPairFlags..'b'
 	local containsPair = false
-	local pairs = {
-		['('] = 0,
-		[')'] = 0,
-		['{'] = 0,
-		['}'] = 0,
-		['['] = 0,
-		[']'] = 0,
-		['<'] = 0,
-		['>'] = 0,
-	}
+	local pairsStr = "(){}[]<>"
+	local escCharsStr = "().%+-*?[]^$"
+	local luaEscCharsStr = "[]$^~"
+	local pairs = {}
+	local escChars = {}
 
-	local escChars = {
-		['('] = '%(',
-		[')'] = '%)',
-		['.'] = '%.',
-		['%'] = '%%',
-		['+'] = '%+',
-		['-'] = '%-',
-		['*'] = '%*',
-		['?'] = '%?',
-		['['] = '%[',
-		[']'] = '%]',
-		['^'] = '%^',
-		['$'] = '%$',
-	}
+	for i = 1, #pairsStr, 1 do
+		pairs[pairsStr:sub(i, i)] = 0
+	end
+
+	for i = 1, #escCharsStr, 1 do
+		local char = escCharsStr:sub(i, i)
+		escChars[char] = '%'..char
+	end
 
 	if escChars[curChar[1]] then
 		curChar[1] = escChars[curChar[1]]
@@ -53,26 +42,19 @@ function FindPair(chars)
 		end
 	end
 
-	surChars[1] = surChars[1]:gsub('%[', '\\[')
-	surChars[2] = surChars[2]:gsub('%[', '\\[')
-	surChars[1] = surChars[1]:gsub('%]', '\\]')
-	surChars[2] = surChars[2]:gsub('%]', '\\]')
-	surChars[1] = surChars[1]:gsub('%$', '\\$')
-	surChars[2] = surChars[2]:gsub('%$', '\\$')
-	surChars[1] = surChars[1]:gsub('%^', '\\^')
-	surChars[2] = surChars[2]:gsub('%^', '\\^')
-	surChars[1] = surChars[1]:gsub('~', '\\~')
-	surChars[2] = surChars[2]:gsub('~', '\\~')
+	for i = 1, 2, 1 do
+		for j = 1, #luaEscCharsStr, 1 do
+			local char = luaEscCharsStr:sub(j, j)
+			surChars[i] = surChars[i]:gsub('%'..char, '\\'..char)
+		end
+	end
+
 
 	local function makeRet()
-		ePos[1] = ePos[1] - 1
-		ePos[2] = ePos[2] - 1
 		sPos[1] = sPos[1] - 1
 		sPos[2] = sPos[2] - 1
-
-		if ePos[1] < sPos[1] or ePos[2] < sPos[2] then
-			return {ePos, sPos, eLen, sLen}
-		end
+		ePos[1] = ePos[1] - 1
+		ePos[2] = ePos[2] - 1
 
 		return {sPos, ePos, sLen, eLen}
 	end

@@ -14,7 +14,9 @@ function TexMaps()
 	vim.api.nvim_buf_set_keymap(0, 'o', 'i$', ':TextObjMotion i$<CR>', {})
 	vim.api.nvim_buf_set_keymap(0, 'o', 'a$', ':TextObjMotion a$<CR>', {})
 
-	local items = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' }
+	local items = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+									'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+									'1', '2', '3', '4', '5', '6' }
 	local item_str
 	for i = 1 , #items do
 		item_str = '\\item[('..items[i]..')] '
