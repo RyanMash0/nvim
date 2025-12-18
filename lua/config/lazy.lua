@@ -33,3 +33,11 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
+
+local lazy_opts = {
+	group = 'lazy',
+	command = 'lua require("lazy").update({show = false})',
+}
+
+vim.api.nvim_create_augroup('lazy', { clear = true })
+vim.api.nvim_create_autocmd('VimEnter', lazy_opts)

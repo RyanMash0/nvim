@@ -86,5 +86,6 @@ return {
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })()
 		end,
+		ensure_installed = { "markdown", "markdowninline" },
 	},
 }

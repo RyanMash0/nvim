@@ -5,11 +5,13 @@
 package.loaded['config.keymaps'] = nil
 package.loaded['config.options'] = nil
 package.loaded['config.lsp'] = nil
+package.loaded['config.completion'] = nil
 
 require('config.keymaps')
 require('config.lazy')
 require('config.options')
 require('config.lsp')
+require('config.completion')
 
 -------------------------------------------------------------------------------
 -- Custom Plugins                                                            --

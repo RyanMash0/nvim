@@ -1,21 +1,18 @@
 -------------------------------------------------------------------------------
 -- LSP Config                                                                --
 -------------------------------------------------------------------------------
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-vim.diagnostic.config({
-	virtual_text = true
-})
+vim.diagnostic.config({ virtual_text = true })
 
-vim.lsp.config('ts_ls', { capabilities = capabilities })
-vim.lsp.config('texlab', { capabilities = capabilities })
-vim.lsp.config('jdtls', { capabilities = capabilities })
-vim.lsp.config('pyright', { capabilities = capabilities })
-vim.lsp.config('clangd', {
-	capabilities = capabilities,
-	cmd = { "clangd", "--background-index" },
-})
-vim.lsp.config('lua_ls', {
-	capabilities = capabilities,
+local no_opts = {}
+
+local clangd_opts = {
+	cmd = {
+		"clangd",
+		"--background-index",
+	},
+}
+
+local lua_ls_opts = {
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -26,11 +23,18 @@ vim.lsp.config('lua_ls', {
 			},
 		},
 	},
-})
+}
+
+vim.lsp.config('clangd', clangd_opts)
+vim.lsp.config('jdtls', no_opts)
+vim.lsp.config('lua_ls', lua_ls_opts)
+vim.lsp.config('pyright', no_opts)
+vim.lsp.config('texlab', no_opts)
+vim.lsp.config('ts_ls', no_opts)
 
 vim.lsp.enable("clangd")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("texlab")
 vim.lsp.enable("jdtls")
-vim.lsp.enable("pyright")
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("pyright")
+vim.lsp.enable("texlab")
+vim.lsp.enable("ts_ls")

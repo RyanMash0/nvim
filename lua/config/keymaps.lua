@@ -13,9 +13,17 @@ vim.g.mapleader = ","
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 
 -- Completion
--- vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
--- vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
--- vim.cmd("inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<CR>'")
+vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
+vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
+vim.cmd("inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<CR>'")
+vim.keymap.set('i', '<BS>', function()
+	local pos = vim.api.nvim_win_get_cursor(0)[2] - 1
+	local line = vim.api.nvim_get_current_line()
+	if line:sub(pos, pos):match('%s') == nil and pos > 0 then
+		vim.defer_fn(function() vim.lsp.completion.get() end, 100)
+	end
+	return '<BS>'
+end, { expr = true })
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')

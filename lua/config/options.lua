@@ -1,14 +1,24 @@
 -------------------------------------------------------------------------------
 -- Options                                                                   --
 -------------------------------------------------------------------------------
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-vim.o.timeout = false
-vim.o.mouse = ''
-vim.o.gdefault = true
-vim.o.number = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.timeout = false
+vim.opt.mouse = ''
+vim.opt.gdefault = true
+vim.opt.number = true
 -- vim.o.relativenumber = true
-vim.o.pumheight = 10
-vim.o.scrolloff = 5
-vim.cmd([[colorscheme gruvbox-material]])
+vim.opt.pumheight = 10
+vim.opt.scrolloff = 5
+vim.cmd('colorscheme gruvbox-material')
 vim.g.netrw_list_hide = '.DS_Store'
+vim.opt.completeopt = {'menuone','noselect','popup'}
+-- vim.opt.completeopt = {'menuone','noselect','popup', 'fuzzy'}
+vim.opt.ignorecase = true
+-- vim.opt.pumblend = 15
+vim.opt.pumborder = "rounded"
+vim.api.nvim_set_hl(0, 'PmenuBorder', { ctermbg = 'none', })
+vim.api.nvim_set_hl(0, 'Pmenu', { ctermbg = 'none', })
+vim.api.nvim_set_hl(0, 'PmenuExtra', { link = 'Pmenu' })
+vim.api.nvim_set_hl(0, 'PmenuKind', { link = 'Pmenu' })
+vim.api.nvim_set_hl(0, 'PmenuMatch', { link = 'CmpItemAbbrMatch' })

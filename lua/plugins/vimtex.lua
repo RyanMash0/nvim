@@ -11,7 +11,4 @@ return {
 			vim.g.vimtex_compiler_latexmk_engines = latexmk_engine
 	  end
 	},
-	{
-	  "micangl/cmp-vimtex",
-	},
 }
