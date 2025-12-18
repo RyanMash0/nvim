@@ -1,5 +1,6 @@
 return {
 	{
+		-- Set the PDF viewer to be Skim and the compiler to lualatex
 	  "lervag/vimtex",
 	  lazy = false,
 	  init = function()

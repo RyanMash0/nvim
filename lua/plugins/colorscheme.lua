@@ -1,5 +1,6 @@
 return {
 	{
+		-- Gruvbox Material Color Scheme
 		"sainnhe/gruvbox-material",
 			config = function ()
 				-- vim.g.gruvbox_material_background = 'hard'

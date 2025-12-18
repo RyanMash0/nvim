@@ -1,3 +1,6 @@
+-- I got this from the lazy.nvim github page, the only modifications I have
+-- made are at the bottom
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -34,6 +37,8 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
+--- My contributions:
+-- Sets lazy to autoupdate silently upon entering neovim
 local lazy_opts = {
 	group = 'lazy',
 	command = 'lua require("lazy").update({show = false})',

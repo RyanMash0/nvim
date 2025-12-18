@@ -1,3 +1,4 @@
+-- Symbols that go before the kind of the completion entry
 local lsp_kind_symbol = {
 	Text  = '',
 	Method  = '',
@@ -26,18 +27,24 @@ local lsp_kind_symbol = {
 	TypeParameter = '',
 }
 
+--- Shorten a string to be at most max characters
 local function truncate(s, max)
 	if not s then return s end
 	if #s <= max then return s end
 	return s:sub(1, max - 1) .. "..."
 end
 
+--- Set formatting for CompletionItem entries
 function LspConvert(item)
+	-- Format the CompletionItem label to include any number of words separated
+	-- by " ", ".", or "_", optionally starting with a non-ascii symbol (clangd)
 	local label = item.label:match('[^ -~]*[%s]?[%w+%s?\\.?\\_?]+')
 	local kind_name = vim.lsp.protocol.CompletionItemKind[item.kind]
 	or "Text"
 	local icon = lsp_kind_symbol[kind_name] or " "
 
+	-- Set the info portion of the neovim complete-item to be either the 
+	-- CompletionItem's documentation or its detail
 	local info
 	if type(item.documentation) == "table" then
 		info = item.documentation.value

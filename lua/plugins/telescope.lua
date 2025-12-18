@@ -6,12 +6,8 @@ return {
 		},
 		config = function ()
 			local telescope = require('telescope')
-			-- local search_dirs = {
-			-- 	'**/Dropbox/Personal/text_files/**',
-			-- 	'**/Dropbox/UNC/**',
-			-- 	'/\\.config/**',
-			-- }
 
+			-- Exclude these paths from Telescope search
 			local exclude_dirs = {
 				'**/lazy/**',
 				'**/swap/**',
@@ -19,6 +15,7 @@ return {
 				'**/\\.git/**',
 			}
 
+			-- Exclude these filetypes from Telescope search
 			local exclude_files = {
 				'**/\\.DS_Store',
 				'*\\.xlsx',
@@ -35,6 +32,7 @@ return {
         '*\\.pkf',
 			}
 
+			-- Exclude these LaTeX related file types from Telescope search
 			local exclude_tex = {
 				'*\\.pdf',
 				'*\\.fls',
@@ -44,24 +42,29 @@ return {
 				'*\\.fdb_latexmk',
 			}
 
+			--- ripgrep arguments for finding files
+			-- Executes "rg --files --hidden ..."
 			local find_args = { 'rg', '--files', '--hidden' }
 
-			-- for i = 1, #search_dirs, 1 do
-			-- 	find_args[#find_args + 1] = '--glob='..search_dirs[i]
-			-- end
-
+			--- Remove directories from ripgrep search
+			-- Adds arguments of the form "--glob=!..."
 			for i = 1, #exclude_dirs, 1 do
 				find_args[#find_args + 1] = '--glob=!'..exclude_dirs[i]
 			end
 
+			--- Remove files from ripgrep search
+			-- Adds arguments of the form "--glob=!..."
 			for i = 1, #exclude_files, 1 do
 				find_args[#find_args + 1] = '--glob=!'..exclude_files[i]
 			end
 
+			--- Remove LaTeX related files from ripgrep search
+			-- Adds arguments of the form "--glob=!..."
 			for i = 1, #exclude_tex, 1 do
 				find_args[#find_args + 1] = '--glob=!'..exclude_tex[i]
 			end
 
+			-- Set up/down keybinds and set the file finding command
 			telescope.setup({
 				defaults = {
 					mappings = {
@@ -73,7 +76,6 @@ return {
 				},
 				pickers = {
 					find_files = {
-						-- cwd = '~',
 						find_command = find_args,
 					}
 				}
@@ -86,6 +88,5 @@ return {
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })()
 		end,
-		ensure_installed = { "markdown", "markdowninline" },
 	},
 }
