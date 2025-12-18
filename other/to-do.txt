@@ -1,11 +1,5 @@
 -------------------------------------------------------------------------------
 -- To-Do List                                                                --
 -------------------------------------------------------------------------------
-- Fix MakeSet bug causing error on insert into empty line
-- Fix DeleteSurround quit bug
-- Make ChangeSurround and DeleteSurround . repeatable
-- Fix ChangeSurround and DeleteSurround cancel bug
-- Fix PreSurround .txt bug
-- vim.snippet instead of luasnip
-- Fix escape bug with PreSurround
-- Make PreSurround window create extra line after 1 more character
+? Fix escape bug with PreSurround
+

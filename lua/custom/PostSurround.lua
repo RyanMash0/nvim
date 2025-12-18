@@ -23,6 +23,7 @@ end
 
 local function setOpFunc(mode)
 	local input = GetInput('Surround with')
+	if input == nil then return end
 	local keys = {
 		['n'] = 'g@',
 		['v'] = '`<v`>g@',

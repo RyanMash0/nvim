@@ -7,6 +7,7 @@ require('custom.utils.GetInput')
 
 function ChangeSurround()
 	local chars = GetInput('Change')
+	if chars == nil then return end
 	local pos = FindPair(chars)
 	if pos == nil then return end
 	local sRow = pos[1][1]
@@ -14,6 +15,7 @@ function ChangeSurround()
 	local eRow = pos[2][1]
 	local eCol = pos[2][2]
 	local cChars = GetInput('Replace with')
+	if cChars == nil then return end
 	local sChars = MakeSurround(cChars)
 
 	vim.api.nvim_buf_set_text(0, eRow, eCol, eRow, eCol + pos[4], {sChars[2]})

@@ -1,8 +1,4 @@
 return {
---	{
---		"rktjmp/lush.nvim",
---    { dir = '~/.config/nvim/lua/simple_dark', lazy = true },
---  }
 	{
 		"sainnhe/gruvbox-material",
 			config = function ()

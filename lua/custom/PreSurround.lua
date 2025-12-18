@@ -47,7 +47,7 @@ local function win_resize()
 	local lineNr = vim.api.nvim_win_get_cursor(0)[1]
 	local linesStr = vim.api.nvim_buf_get_lines(0, lineNr - 1, lineNr, true)
 
-	local strWidth = vim.fn.strdisplaywidth(linesStr[1])
+	local strWidth = vim.fn.strdisplaywidth(linesStr[1]) - 1
 	local extraLines = math.floor(strWidth / winWidth)
 
 	if winHeight ~= 1 + extraLines then

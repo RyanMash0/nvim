@@ -6,6 +6,7 @@ require('custom.utils.GetInput')
 
 function DeleteSurround()
 	local chars = GetInput('Delete surrounding')
+	if chars == nil then return end
 	local pos = FindPair(chars)
 	if pos == nil then return end
 	local sRow = pos[1][1]

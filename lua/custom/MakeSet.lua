@@ -4,10 +4,10 @@
 require('custom.utils.GetInput')
 
 function MakeSet()
-	local args = {GetInput('Element'), GetInput('Condition')}
-	if args[1] == nil or args[2] == nil then return end
-	local elem = args[1]
-	local cond = args[2]
+	local elem = GetInput('Element')
+	if elem == nil then return end
+	local cond = GetInput('Condition')
+	if cond == nil then return end
 	local set = '\\lbrace '..elem..' : '..cond..' \\rbrace'
 	local pos = vim.api.nvim_win_get_cursor(0)
 	local row = pos[1] - 1
@@ -17,6 +17,7 @@ function MakeSet()
 		set = '\\lbrace '..elem..' \\rbrace'
 	end
 
+	if #vim.fn.getline('.') == 0 then col = 0 end
 	vim.api.nvim_buf_set_text(0, row, col, row, col, {set})
 	vim.api.nvim_input(#set..'la')
 

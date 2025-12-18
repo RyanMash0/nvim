@@ -61,11 +61,12 @@ vim.keymap.set('n', L..'c-', ':set colorcolumn=0<CR>')
 
 -- Telescope
 local r = 'cwd=/'
-vim.keymap.set('n', L..'f', '<Cmd>Telescope find_files<CR>')
+local u = 'cwd=~'
 vim.keymap.set('n', L..'g', '<Cmd>Telescope git_files<CR>')
-vim.keymap.set('n', L..'com', '<Cmd>Telescope git_commits<CR>')
 vim.keymap.set('n', L..'h', '<Cmd>Telescope help_tags<CR>')
+vim.keymap.set('n', L..'f', '<Cmd>Telescope find_files<CR>')
 vim.keymap.set('n', L..'lg', '<Cmd>Telescope live_grep <CR>')
+vim.keymap.set('n', L..'uf', '<Cmd>Telescope find_files '..u..'<CR>')
+vim.keymap.set('n', L..'ulg', '<Cmd>Telescope live_grep '..u..'<CR>')
 vim.keymap.set('n', L..'rf', '<Cmd>Telescope find_files '..r..'<CR>')
 vim.keymap.set('n', L..'rlg', '<Cmd>Telescope live_grep '..r..'<CR>')
-vim.keymap.set('n', L..'fb', '<Cmd>Telescope buffers<CR>')
