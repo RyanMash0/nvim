@@ -1,3 +1,6 @@
+-------------------------------------------------------------------------------
+-- LSP Completion Comparison Utility                                         --
+-------------------------------------------------------------------------------
 --- Helper function that gets an entry formatted as an LSP CompletionItem
 -- The details of why this function is written this way are complicated and
 -- hard to find. The way I was able to determine this structure was by printing

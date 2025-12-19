@@ -1,3 +1,6 @@
+-------------------------------------------------------------------------------
+-- LSP Completion Conversion Utility                                         --
+-------------------------------------------------------------------------------
 -- Symbols that go before the kind of the completion entry
 local lsp_kind_symbol = {
 	Text  = '',
