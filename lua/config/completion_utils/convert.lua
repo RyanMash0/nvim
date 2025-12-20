@@ -41,7 +41,7 @@ end
 function LspConvert(item)
 	-- Format the CompletionItem label to include any number of words separated
 	-- by " ", ".", or "_", optionally starting with a non-ascii symbol (clangd)
-	local label = item.label:match('[^ -~]*[%s]?[%w+%s?\\.?\\_?]+')
+	local label = item.label:gsub('%b()', ''):gsub('[%s%.%-:][%s%.%-:]+.*$', '')
 	local kind_name = vim.lsp.protocol.CompletionItemKind[item.kind]
 	or "Text"
 	local icon = lsp_kind_symbol[kind_name] or " "

@@ -34,13 +34,3 @@ brew install typescript-language-server
 
 # Font:
 # brew install font-hack-nerd-font
-
-# Markdown:
-# cd ~/Downloads
-# git clone https://github.com/latex-lsp/tree-sitter-latex
-# cd tree-sitter-latex
-# brew install tree-sitter-cli
-# tree-sitter generate
-# tree-sitter build
-# mv ~/Downloads/tree-sitter-latex/latex.dylib ~/.local/share/nvim/lazy/nvim-treesitter/parser/latex.dylib
-# rm -rf ~/Downloads/tree-sitter-latex

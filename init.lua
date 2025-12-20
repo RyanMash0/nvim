@@ -8,7 +8,7 @@ package.loaded['config.lsp'] = nil
 package.loaded['config.completion'] = nil
 
 require('config.keymaps')
-require('config.lazy')
+require('config.pack')
 require('config.options')
 require('config.lsp')
 require('config.completion')

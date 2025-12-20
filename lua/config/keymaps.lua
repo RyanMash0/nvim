@@ -13,9 +13,27 @@ vim.g.mapleader = ","
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 
 -- Completion
-vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
-vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
-vim.cmd("inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<CR>'")
+-- vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
+-- vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
+-- vim.cmd("inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<CR>'")
+vim.keymap.set('i', '<Tab>', function()
+	if vim.fn.pumvisible() then
+		return '<C-n>'
+	end
+	return '<Tab>'
+end, { expr = true })
+vim.keymap.set('i', '<S-Tab>', function()
+	if vim.fn.pumvisible() then
+		return '<C-p>'
+	end
+	return '<S-Tab>'
+end, { expr = true })
+vim.keymap.set('i', '<CR>', function()
+	if vim.fn.pumvisible() then
+		return '<C-y>'
+	end
+	return '<CR>'
+end, { expr = true })
 vim.keymap.set('i', '<BS>', function()
 	local pos = vim.api.nvim_win_get_cursor(0)[2] - 1
 	local line = vim.api.nvim_get_current_line()
@@ -24,6 +42,7 @@ vim.keymap.set('i', '<BS>', function()
 	end
 	return '<BS>'
 end, { expr = true })
+
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')

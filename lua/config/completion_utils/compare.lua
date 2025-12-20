@@ -68,6 +68,8 @@ function LspCmp(a, b)
 	-- in some clangd entries is not included in the matching function)
   local a_label = str(a_ci.label):gsub('%b()', ''):match('[!-~]+')
   local b_label = str(b_ci.label):gsub('%b()', ''):match('[!-~]+')
+	if not a_label then return false end
+	if not b_label then return true end
 
 	-- Clip both labels to be the same length for alphabetical comparison
 	local min_label_len = math.min(#a_label, #b_label)
