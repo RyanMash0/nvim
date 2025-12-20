@@ -4,6 +4,8 @@
 table.unpack = table.unpack or unpack
 
 local plugin_dir = 'plugins'
+local config_dir = '.config/nvim/lua'
+local home_dir = os.getenv('HOME') or os.getenv('USERPROFILE')
 Plugins = {}
 
 function Plugins:add_plugin_from_file(file)
@@ -18,7 +20,7 @@ local plugin_files = vim.fs.find(function(name)
 end, {
 	limit = math.huge,
 	type = 'file',
-	path = './lua/' .. plugin_dir,
+	path = home_dir..'/'..config_dir..'/'..plugin_dir,
 })
 
 local path_str
