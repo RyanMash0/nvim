@@ -14,11 +14,11 @@ return {
 		},
 	},
 	config = function()
-		require("nvim-treesitter").install({
-			'markdown',
-			'markdown_inline',
-			'latex',
-			'lua',
-		})
+		-- require("nvim-treesitter").install({
+		-- 	'markdown',
+		-- 	'markdown_inline',
+		-- 	'latex',
+		-- 	'lua',
+		-- })
 	end,
 }

@@ -36,4 +36,4 @@ require('custom.MakeSet')
 ------------------------------------------------------------------------------
 package.loaded['user'] = nil
 
-require('user')
+vim.defer_fn(function () require('user') end, 10)

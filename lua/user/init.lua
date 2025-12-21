@@ -3,4 +3,6 @@
 ------------------------------------------------------------------------------
 --- Add your configuration overrides here. Feel free to add more files to this
 --- directory and link them in, but do not delete this file or else the
---- configuration will break.
+--- configuration will break. Also note that the leader key is the only key
+--- that cannot be set here. If you want to change the leader, then change it
+--- in the keymaps.lua file.
