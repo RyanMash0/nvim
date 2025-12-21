@@ -5,33 +5,31 @@
 # --------------------------------------------------------------------------- #
 
 # Neovim:
-brew install neovim
-brew unlink neovim
-brew install neovim --HEAD
-brew link neovim --HEAD
+yay -Sy neovim-nightly-bin
 
 # Packages:
-brew install tree-sitter-cli
-brew install ripgrep
-brew install --cask mactex-no-gui
+sudo pacman -Sy tree-sitter-cli
+sudo pacman -Sy ripgrep
+sudo pacman -Sy texlive
 
 # Language Servers:
-brew install llvm
-brew install jdtls
-brew install lua-language-server
-brew install pyright
-brew install texlab
-brew install typescript-language-server
+sudo pacman -Sy llvm clang
+yay -Sy jdtls
+sudo pacman -Sy lua-language-server
+sudo pacman -Sy pyright
+sudo pacman -Sy texlab
+sudo pacman -Sy typescript-language-server
 
 # PDF Viewer for LaTeX:
-# Skim (https://skim-app.sourceforge.io)
+sudo pacman -Sy zathura
+sudo pacman -Sy zathura-pdf-mupdf
 
 # --------------------------------------------------------------------------- #
 #  Optional (uncomment to run)                                                #
 # --------------------------------------------------------------------------- #
 
 # Terminal:
-# brew install alacritty
+# sudo pacman -Sy alacritty
 
 # Font:
-# brew install font-hack-nerd-font
+# sudo pacman -Sy ttf-hack-nerd
