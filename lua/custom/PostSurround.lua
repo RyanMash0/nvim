@@ -12,6 +12,10 @@ function PostSurround(chars)
 	local s_chars = MakeSurround(chars)
 	local cur_pos = {row_end + 1, col_end + #s_chars[1] + #s_chars[2] - 1}
 
+	if #vim.api.nvim_buf_get_lines(0, row_end, row_end + 1, false)[1] == 0 then
+		col_end = 0
+	end
+
 	vim.api.nvim_buf_set_text(0, row_end, col_end,
 														row_end, col_end, {s_chars[2]})
 	vim.api.nvim_buf_set_text(0, row_start, col_start,
