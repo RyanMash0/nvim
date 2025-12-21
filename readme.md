@@ -24,7 +24,7 @@ This config is designed for neovim v0.12.0-dev-1860 or later.
 
 ## Installation
 ### Cloning the Repo
-This repository contains configuration files for Neovim that must be installed to the Neovim config directory. If you have an existing configuration that you would like to keep, **make sure to backup your configuration** to another directory before performing the next steps. 
+This repository contains configuration files for Neovim that must be installed to the Neovim config directory. If you have an existing configuration that you would like to keep, <ins>**make sure to backup your configuration**</ins> to another directory before performing the next steps. 
 
 Run these commands to install the configuration:
 ```
@@ -50,5 +50,5 @@ Paste this line into your terminal to automatically install requirements through
 ~/.config/pacman-install.sh
 ```
 
-### WSL and Linux Distributions
+### WSL and Other Linux Distributions
 There are currently no other installation scripts, but everything needed is listed in the requirements section.

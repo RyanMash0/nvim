@@ -30,3 +30,10 @@ require('custom.DeleteSurround')
 require('custom.ChangeSurround')
 require('custom.TextObjMotion')
 require('custom.MakeSet')
+
+------------------------------------------------------------------------------
+-- User Configs                                                             --
+------------------------------------------------------------------------------
+package.loaded['user'] = nil
+
+require('user')
