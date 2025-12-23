@@ -23,6 +23,7 @@ package.loaded['custom.DeleteSurround'] = nil
 package.loaded['custom.ChangeSurround'] = nil
 package.loaded['custom.TextObjMotion'] = nil
 package.loaded['custom.MakeSet'] = nil
+package.loaded['custom.IDE'] = nil
 
 require('custom.PostSurround')
 require('custom.PreSurround')
@@ -30,6 +31,7 @@ require('custom.DeleteSurround')
 require('custom.ChangeSurround')
 require('custom.TextObjMotion')
 require('custom.MakeSet')
+require('custom.IDE')
 
 ------------------------------------------------------------------------------
 -- User Configs                                                             --

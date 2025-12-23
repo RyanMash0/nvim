@@ -43,6 +43,26 @@ vim.keymap.set('i', '<BS>', function()
 	return '<BS>'
 end, { expr = true })
 
+-- Mouse
+local disable = {
+	"<double-click>",
+	"<2-LeftMouse>",
+	"<3-LeftMouse>",
+	"<C-LeftMouse>",
+	"<LeftDrag>",
+	"<LeftRelease>",
+	"<MiddleMouse>",
+	"<RightMouse>",
+	"<A-RightMouse>",
+	"<S-RightMouse>",
+	"<C-RightMouse>",
+	"<RightDrag>",
+	"<RightRelease>",
+}
+
+for _, key in ipairs(disable) do
+	vim.keymap.set({'n', 'v', 'i', 'c'}, key, '<Nop>', {silent = true, noremap = true })
+end
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')
@@ -54,6 +74,9 @@ vim.keymap.set('n', L..'w', '<C-w>')
 vim.keymap.set('n', L..'n', '<Cmd>bn<CR>')
 vim.keymap.set('n', L..'b', '<Cmd>bp<CR>')
 vim.keymap.set('n', L..'d<CR>', '<Cmd>bp | bd #<CR>')
+-- vim.keymap.set('n', L..'n', '<Cmd>tabnext<CR>')
+-- vim.keymap.set('n', L..'b', '<Cmd>tabprevious<CR>')
+-- vim.keymap.set('n', L..'d<CR>', '<Cmd> tabclose <CR>')
 
 -- Surround
 vim.keymap.set('n', L..'s', ':PostSurround<CR>')

@@ -4,13 +4,16 @@
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.timeout = false
-vim.opt.mouse = ''
+vim.opt.mouse = 'n'
 vim.opt.gdefault = true
 vim.opt.number = true
 vim.opt.pumheight = 10
 vim.opt.scrolloff = 5
+vim.opt.equalalways = false
 vim.cmd('colorscheme gruvbox-material')
 vim.g.netrw_list_hide = '.DS_Store'
+-- vim.g.netrw_browse_split = 3
+-- vim.g.netrw_liststyle = 2
 
 -- Completion menu
 vim.opt.completeopt = {'menuone','noselect','popup'}
