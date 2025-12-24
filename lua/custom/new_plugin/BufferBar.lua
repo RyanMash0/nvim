@@ -1,3 +1,18 @@
+function SwitchBuffer()
+	local bufId = vim.g.buf_bar_buf_id
+	local winId = vim.g.buf_bar_win_id
+	local cur_col = vim.api.nvim_win_get_cursor(winId)[2]
+	local buffer_info = vim.b[bufId].buffer_info
+	local switch_buf
+	for key, val in pairs(buffer_info) do
+		if val ~= vim.NIL and cur_col >= val.first and cur_col <= val.last then
+			switch_buf = key
+			break
+		end
+	end
+	CheckOrMakeWin()
+	vim.api.nvim_win_set_buf(vim.g.main_win_id, switch_buf)
+end
 
 local function truncate_end(str, num)
 	if #str <= num then return str end
@@ -37,17 +52,7 @@ function MakeBufferBar()
 		end
 	end
 
--- U+2501 - bottom of border,
--- U+2518 - corner,
--- U+2502 - vertical bars for right of tab
-
-	-- vim.b[bufId].buffers = 
 	local buffer_info = {}
-	local test = {
-		first = 0,
-		last = 0,
-	}
-
 	local buf_name
 	local file_name
 	local dir_name
@@ -79,7 +84,6 @@ function MakeBufferBar()
 	vim.bo[bufId].modifiable = true
 	vim.api.nvim_buf_set_lines(bufId, 0, -1, true, {dir_str, file_str})
 	vim.bo[bufId].modifiable = false
-	-- vim.print(buf_str)
 	HighlightBufferBar()
 end
 

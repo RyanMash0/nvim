@@ -4,8 +4,8 @@
 ? Fix escape bug with PreSurround
 ? Add valid check on buffer bar autocommand
 ? Add git status highlighting to file tree/buffer bar
+- Add terminal buffers
 - Modified status in buffer bar
-- Make buffer bar interactable
 - Make MakeLayout work with multiple main windows (delete and then replace
   others through caching)
 - Allow moving tabs

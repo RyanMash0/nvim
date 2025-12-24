@@ -127,7 +127,6 @@ function UpdateFileTree()
 		local main_win = vim.g.main_win_id
 		vim.api.nvim_set_current_win(main_win)
 		vim.cmd('edit ' .. parent.path)
-		MakeBufferBar()
 		vim.api.nvim_set_current_win(vim.g.file_explorer_win_id)
 		return
 	end

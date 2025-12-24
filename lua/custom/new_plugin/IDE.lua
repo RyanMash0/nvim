@@ -62,29 +62,50 @@ function MakeLayout()
 	vim.bo[bufBar].buflisted = false
 	vim.wo[bufBarWin].wrap = false
 	vim.wo[bufBarWin].winfixbuf = true
+	local buf_bar_switch = vim.schedule_wrap(SwitchBuffer)
 	local tree_update = vim.schedule_wrap(UpdateFileTree)
 	local tree_make = vim.schedule_wrap(MakeFileTree)
 	local tree_descend = vim.schedule_wrap(DescendFileTree)
 	local tree_ascend = vim.schedule_wrap(AscendFileTree)
 	local tree_opts = { buffer = ex, expr = true, remap = false }
 	local term_opts = { buffer = term, remap = false }
+	local buf_bar_opts = { buffer = bufBar, expr = true, remap = false }
 	-- vim.api.nvim_create_augroup('file_explorer', { clear = true })
 	vim.keymap.set('n', 'r', tree_make, tree_opts)
 	vim.keymap.set('n', '-', tree_ascend, tree_opts)
 	vim.keymap.set('n', '<CR>', tree_update, tree_opts)
 	vim.keymap.set('n', '<S-CR>', tree_descend, tree_opts)
 	vim.keymap.set('n', '<C-M>', tree_update, tree_opts)
+	vim.keymap.set('n', '<S-C-M>', tree_update, tree_opts)
 	vim.keymap.set('n', '<LeftMouse>', function ()
+		if vim.fn.getmousepos().winid ~= vim.g.file_explorer_win_id then
+			return '<LeftMouse>'
+		end
 		tree_update()
 		return '<LeftMouse>'
 	end, tree_opts)
 	vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', term_opts)
+	vim.keymap.set('n', '<CR>', buf_bar_switch, buf_bar_opts)
+	vim.keymap.set('n', '<C-M>', buf_bar_switch, buf_bar_opts)
+	vim.keymap.set('n', '<LeftMouse>', function ()
+		if vim.fn.getmousepos().winid ~= vim.g.buf_bar_win_id then
+			return '<LeftMouse>'
+		end
+		buf_bar_switch()
+		return '<LeftMouse>'
+	end, buf_bar_opts)
+	vim.keymap.set('n', 'w', function ()
+		vim.fn.search('[^ \\u2502]\\+', 'W', vim.fn.line('.'))
+	end, { buffer = bufBar, remap = false })
+	vim.keymap.set('n', 'b', function ()
+		vim.fn.search('[^ \\u2502]\\+', 'Wb', vim.fn.line('.'))
+	end, { buffer = bufBar, remap = false })
 
 	MakeFileTree()
 	MakeBufferBar()
 
 	vim.api.nvim_create_augroup('BufferBar', { clear = true })
-	vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave' }, {
+	vim.api.nvim_create_autocmd('BufEnter', {
 		group = 'BufferBar',
 		callback = function()
 			vim.defer_fn(MakeBufferBar, 10)
@@ -146,8 +167,3 @@ function DeleteLayout()
 		vim.g.buf_bar_buf_id = nil
 	end
 end
-
--- function RefreshLayout()
--- 	DeleteLayout()
--- 	MakeLayout()
--- end
