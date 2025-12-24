@@ -1,3 +1,4 @@
+require('custom.new_plugin.CheckWin')
 -- rename opens prompt?
 -- move opens prompt?
 local function generate_tree_action(bufId, ex_table, line, func)
@@ -34,7 +35,6 @@ local function print_paths(bufId, ex_table, start_line)
 	else
 		indicator = {directory = '> ', other = '+ '}
 	end
-	-- indicator = {directory = '', other = ''}
 
 	local directories = 0
 	local other = 0
@@ -91,7 +91,7 @@ local function close(bufId, ex_table, line)
 	vim.api.nvim_buf_set_lines(bufId, line - 1, line, true, {name})
 
 	local sub_items = 0
-	while ex_table[line + 1].depth > parent.depth do
+	while #ex_table > line and ex_table[line + 1].depth > parent.depth do
 		sub_items = sub_items + 1
 		table.insert(parent.cached_entries, ex_table[line + 1])
 		table.remove(ex_table, line + 1)
@@ -123,15 +123,12 @@ function UpdateFileTree()
 	local ex_table = vim.b[bufId].explorer_indent
 	local parent = ex_table[line]
 	if parent.type == 'file' then
-		local winId = vim.g.file_explorer_win_id
-		local main_win = vim.api.nvim_win_call(winId, function ()
-			return vim.fn.win_getid(vim.fn.winnr('l'))
-		end)
-		-- vim.print(vim.fn.win_getid(vim.fn.winnr('l')))
-		-- vim.print(main_win)
+		CheckOrMakeWin()
+		local main_win = vim.g.main_win_id
 		vim.api.nvim_set_current_win(main_win)
 		vim.cmd('edit ' .. parent.path)
 		MakeBufferBar()
+		vim.api.nvim_set_current_win(vim.g.file_explorer_win_id)
 		return
 	end
 
@@ -171,8 +168,9 @@ function MakeFileTree()
 	local border = '=========================================='
 	local title_line = ' File Tree'
 	local home_dir = tostring(os.getenv('HOME') or os.getenv('USERPROFILE'))
-	local path_line = ' Path: ' .. path:gsub(home_dir, '~')
-	if path_line ~= ' /' then path_line = path_line .. '/' end
+	local path_line = path:gsub(home_dir, '~')
+	if path_line ~= '/' then path_line = path_line .. '/' end
+	path_line = ' Path: ' .. path_line
 
 	local user_header = vim.g.file_explorer_header
 	local header_lines = user_header or {border, title_line, path_line, border}
@@ -202,18 +200,23 @@ function ChangeFileTreeDir(path)
 	vim.schedule(function ()
 		vim.cmd('bufdo cd ' .. path)
 		MakeFileTree()
+		vim.api.nvim_set_current_win(vim.g.file_explorer_win_id)
 	end)
 end
 
 function AscendFileTree()
 	vim.schedule(function ()
-		ChangeFileTreeDir(vim.fs.abspath('.'):gsub('/[^/]+$', ''))
+		local new_path = vim.fs.abspath('.'):gsub('/[^/]+$', '')
+		if new_path == '' then new_path = '/' end
+		vim.print(new_path)
+		ChangeFileTreeDir(new_path)
 	end)
 end
 
 function DescendFileTree()
 	local line = vim.fn.line('.')
 	local bufId = vim.g.file_explorer_buf_id
+	if vim.b[bufId].explorer_indent[line].type ~= 'directory' then return end
 	local path = vim.b[bufId].explorer_indent[line].path
 	ChangeFileTreeDir(path)
 end

@@ -3,6 +3,7 @@
 -------------------------------------------------------------------------------
 require('custom.new_plugin.FileTree')
 require('custom.new_plugin.BufferBar')
+require('custom.new_plugin.CheckWin')
 --- Components
 -- Layout
 -- Buffer line
@@ -12,7 +13,6 @@ require('custom.new_plugin.BufferBar')
 
 
 function MakeLayout()
-	vim.g.main_win_id = vim.api.nvim_get_current_win()
 	DeleteLayout()
 	local exWinOpts = {
 		vertical = true,
@@ -27,12 +27,8 @@ function MakeLayout()
 
 	local bufBarWinOpts = {
 		height = 2,
-		-- relative = 'tabline',
 		split = 'above',
 		style = 'minimal',
-		-- width = 50,
-		-- row = 0,
-		-- col = 0,
 	}
 
 	local ex = vim.api.nvim_create_buf(false, true)
@@ -44,6 +40,7 @@ function MakeLayout()
 	local bufBarWin = vim.api.nvim_open_win(bufBar, false, bufBarWinOpts)
 
 	vim.g.file_explorer_ns = vim.api.nvim_create_namespace('FileTree')
+	vim.g.buf_bar_ns = vim.api.nvim_create_namespace('BufferBar')
 	vim.g.file_explorer_buf_id = ex
 	vim.g.terminal_buf_id = term
 	vim.g.buf_bar_buf_id = bufBar
@@ -85,22 +82,22 @@ function MakeLayout()
 
 	MakeFileTree()
 	MakeBufferBar()
-end
 
-local function check_is_number(variable)
-	return type(variable) == 'number'
+	vim.api.nvim_create_augroup('BufferBar', { clear = true })
+	vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave' }, {
+		group = 'BufferBar',
+		callback = function()
+			vim.defer_fn(MakeBufferBar, 10)
+		end
+	})
 end
 
 local function close_buf(id)
-	if vim.api.nvim_buf_is_valid(id) then
-		vim.api.nvim_buf_delete(id, { force = true, })
-	end
+	vim.api.nvim_buf_delete(id, { force = true, })
 end
 
 local function close_win(id)
-	if vim.api.nvim_win_is_valid(id) then
-		vim.api.nvim_win_close(id, true)
-	end
+	vim.api.nvim_win_close(id, true)
 end
 
 function DeleteLayout()
@@ -110,15 +107,14 @@ function DeleteLayout()
 	local term_buf_id = vim.g.terminal_buf_id
 	local buf_bar_win_id = vim.g.buf_bar_win_id
 	local buf_bar_buf_id = vim.g.buf_bar_buf_id
-	local ex_win_exists = check_is_number(ex_win_id)
-	local ex_buf_exists = check_is_number(ex_buf_id)
-	local term_win_exists = check_is_number(term_win_id)
-	local term_buf_exists = check_is_number(term_buf_id)
-	local buf_bar_win_exists = check_is_number(buf_bar_win_id)
-	local buf_bar_buf_exists = check_is_number(buf_bar_buf_id)
+	local ex_win_exists = CheckValid(ex_win_id, 'window')
+	local ex_buf_exists = CheckValid(ex_buf_id, 'buffer')
+	local term_win_exists = CheckValid(term_win_id, 'window')
+	local term_buf_exists = CheckValid(term_buf_id, 'buffer')
+	local buf_bar_win_exists = CheckValid(buf_bar_win_id, 'window')
+	local buf_bar_buf_exists = CheckValid(buf_bar_buf_id, 'buffer')
 
-	local windows = vim.api.nvim_tabpage_list_wins(0)
-	local main_win = vim.g.main_win_id
+	CheckOrMakeWin()
 
 	if ex_win_exists then
 		close_win(ex_win_id)

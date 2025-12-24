@@ -2,4 +2,12 @@
 -- Bugs List                                                                 --
 -------------------------------------------------------------------------------
 ? Fix escape bug with PreSurround
+? Add valid check on buffer bar autocommand
+- Make MakeLayout work with multiple main windows (delete and then replace
+  others through caching)
+- Allow moving tabs
+- Add rename in file tree
+- Add delete in file tree
+- Add move in file tree
+- Add add in file tree
 
