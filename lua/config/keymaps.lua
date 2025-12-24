@@ -9,8 +9,14 @@ vim.keymap.set('n', '-', ',')
 vim.keymap.set('n', ',', '<Nop>')
 vim.g.mapleader = ","
 
+-- Mouse
+vim.keymap.set('n', '<LeftDrag>', '<Nop>', { remap = false })
+vim.keymap.set('n', '<LeftRelease>', '<Nop>', { remap = false })
+vim.keymap.set('n', L..'<LeftDrag>', '<LeftDrag>', { remap = false })
+vim.keymap.set('n', L..'<LeftRelease>', '<LeftRelease>', { remap = false })
+
 -- Definition
-vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 
 -- Completion
 vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
@@ -53,9 +59,6 @@ vim.keymap.set('n', L..'w', '<C-w>')
 vim.keymap.set('n', L..'n', '<Cmd>bn<CR>')
 vim.keymap.set('n', L..'b', '<Cmd>bp<CR>')
 vim.keymap.set('n', L..'d<CR>', '<Cmd>bp | bd #<CR>')
--- vim.keymap.set('n', L..'n', '<Cmd>tabnext<CR>')
--- vim.keymap.set('n', L..'b', '<Cmd>tabprevious<CR>')
--- vim.keymap.set('n', L..'d<CR>', '<Cmd> tabclose <CR>')
 
 -- Surround
 vim.keymap.set('n', L..'s', ':PostSurround<CR>')
