@@ -43,27 +43,6 @@ vim.keymap.set('i', '<BS>', function()
 	return '<BS>'
 end, { expr = true })
 
--- Mouse
-local disable = {
-	"<double-click>",
-	"<2-LeftMouse>",
-	"<3-LeftMouse>",
-	"<C-LeftMouse>",
-	"<LeftDrag>",
-	"<LeftRelease>",
-	"<MiddleMouse>",
-	"<RightMouse>",
-	"<A-RightMouse>",
-	"<S-RightMouse>",
-	"<C-RightMouse>",
-	"<RightDrag>",
-	"<RightRelease>",
-}
-
-for _, key in ipairs(disable) do
-	vim.keymap.set({'n', 'v', 'i', 'c'}, key, '<Nop>', {silent = true, noremap = true })
-end
-
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')
 

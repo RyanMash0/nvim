@@ -1,14 +1,5 @@
--------------------------------------------------------------------------------
--- IDE like setup                                                            --
--------------------------------------------------------------------------------
-
---- Components
--- Layout
--- Buffer line
--- Status line
--- Netrw styling
--- Commands list
-
+-- rename opens prompt?
+-- move opens prompt?
 local function generate_tree_action(bufId, ex_table, line, func)
 	vim.bo[bufId].modifiable = true
 	vim.b[bufId].explorer_indent = func(bufId, ex_table, line)
@@ -81,9 +72,9 @@ local function expand(bufId, ex_table, line)
 	local parent = ex_table[line]
 	parent.expanded = true
 	local name = vim.api.nvim_buf_get_lines(bufId, line - 1, line, true)[1]
-	name = name:gsub('>', 'v')
+	name = name:gsub('>', 'v', 1)
 	vim.api.nvim_buf_set_lines(bufId, line - 1, line, true, {name})
-	if parent.cached then
+	if parent.cached and vim.g.file_explorer_cache then
 		return get_cached(bufId, ex_table, line)
 	else
 		return print_paths(bufId, ex_table, line)
@@ -96,7 +87,7 @@ local function close(bufId, ex_table, line)
 	parent.cached = true
 
 	local name = vim.api.nvim_buf_get_lines(bufId, line - 1, line, true)[1]
-	name = name:gsub('v', '>')
+	name = name:gsub('v', '>', 1)
 	vim.api.nvim_buf_set_lines(bufId, line - 1, line, true, {name})
 
 	local sub_items = 0
@@ -105,8 +96,10 @@ local function close(bufId, ex_table, line)
 		table.insert(parent.cached_entries, ex_table[line + 1])
 		table.remove(ex_table, line + 1)
 	end
-	parent.cached_lines =
-		vim.api.nvim_buf_get_lines(bufId, line, line + sub_items, true)
+	if vim.g.file_explorer_cache then
+		parent.cached_lines =
+			vim.api.nvim_buf_get_lines(bufId, line, line + sub_items, true)
+	end
 
 	vim.api.nvim_buf_set_lines(bufId, line, line + sub_items, true, {})
 	return ex_table
@@ -138,6 +131,7 @@ function UpdateFileTree()
 		-- vim.print(main_win)
 		vim.api.nvim_set_current_win(main_win)
 		vim.cmd('edit ' .. parent.path)
+		MakeBufferBar()
 		return
 	end
 
@@ -150,8 +144,6 @@ function UpdateFileTree()
 	HighlightFileTree()
 	return ''
 end
-
-vim.g.file_explorer_header = nil
 
 function MakeFileTree()
 	local bufId = vim.g.file_explorer_buf_id
@@ -208,7 +200,7 @@ end
 
 function ChangeFileTreeDir(path)
 	vim.schedule(function ()
-		vim.cmd('cd ' .. path)
+		vim.cmd('bufdo cd ' .. path)
 		MakeFileTree()
 	end)
 end
@@ -232,7 +224,7 @@ function HighlightFileTree()
 	vim.api.nvim_buf_clear_namespace(bufId, nsId, 0, -1)
 	local ex_table = vim.b[bufId].explorer_indent
 	local dir_hl = vim.api.nvim_get_hl_id_by_name('netrwDir')
-	local bar_hl = vim.api.nvim_get_hl_id_by_name('netrwTreeBar')
+	local bar_hl = vim.api.nvim_get_hl_id_by_name('Special')
 	local plain_hl = vim.api.nvim_get_hl_id_by_name('netrwPlain')
 	local header_hl = vim.api.nvim_get_hl_id_by_name('netrwComment')
 	local name_start
@@ -254,119 +246,3 @@ function HighlightFileTree()
 		vim.api.nvim_buf_set_extmark(bufId, nsId, i - 1, name_start, {end_col = line_len, hl_group = hl_group})
 	end
 end
-
-function MakeLayout()
-	local exWinOpts = {
-		vertical = true,
-		split = 'left',
-		width = 30,
-	}
-
-	local termWinOpts = {
-		height = 10,
-		split = 'below',
-	}
-	vim.g.file_explorer_ns = vim.api.nvim_create_namespace('FileTree')
-	-- validate existence
-	local ex = vim.api.nvim_create_buf(false, true)
-	local term = vim.api.nvim_create_buf(true, false)
-	vim.g.file_explorer_buf_id = ex
-	vim.g.terminal_buf_id = term
-
-	local exWin = vim.api.nvim_open_win(ex, false, exWinOpts)
-	local termWin = vim.api.nvim_open_win(term, false, termWinOpts)
-	vim.g.file_explorer_win_id = exWin
-	vim.g.terminal_win_id = termWin
-	-- vim.wo[exWin].winbar = function () return "%f" end
-
-	-- vim.api.nvim_win_call(exWin, function ()
-	-- 	vim.cmd.Ex()
-	-- 	-- vim.cmd.normal('I')
-	-- end)
-
-	-- come back
-	-- vim.wo[exWin].win_min_width = 10
-
-	vim.api.nvim_buf_call(term, function () vim.cmd.terminal() end)
-
-	vim.bo[ex].modifiable = false
-	vim.wo[exWin].wrap = false
-	vim.wo[exWin].number = false
-	vim.wo[exWin].winfixbuf = true
-
-	vim.bo[term].buflisted = false
-	vim.wo[termWin].winfixbuf = true
-	local tree_update = vim.schedule_wrap(UpdateFileTree)
-	local tree_make = vim.schedule_wrap(MakeFileTree)
-	local tree_descend = vim.schedule_wrap(DescendFileTree)
-	local tree_ascend = vim.schedule_wrap(AscendFileTree)
-	local tree_opts = { buffer = ex, expr = true, remap = false }
-	local term_opts = { buffer = term, remap = false }
-	vim.api.nvim_create_augroup('file_explorer', { clear = true })
-	vim.keymap.set('n', 'r', tree_make, tree_opts)
-	vim.keymap.set('n', '-', tree_ascend, tree_opts)
-	vim.keymap.set('n', '<CR>', tree_update, tree_opts)
-	vim.keymap.set('n', '<S-CR>', tree_descend, tree_opts)
-	vim.keymap.set('n', '<C-M>', tree_update, tree_opts)
-	vim.keymap.set('n', '<LeftMouse>', tree_update, tree_opts)
-	vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', term_opts)
-
-	MakeFileTree()
-end
-
-function DeleteLayout()
-	if type(vim.g.file_explorer_buf_id) == 'number'
-		or type(vim.g.file_explorer_win_id) == 'number' then
-		vim.api.nvim_win_close(vim.g.file_explorer_win_id, true)
-		vim.api.nvim_buf_delete(vim.g.file_explorer_buf_id, { force = true, })
-
-		vim.g.file_explorer_buf_id = nil
-		vim.g.file_explorer_win_id = nil
-	end
-
-	if type(vim.g.terminal_buf_id) == 'number'
-		or type(vim.g.terminal_win_id) == 'number' then
-		vim.api.nvim_win_close(vim.g.terminal_win_id, true)
-		vim.api.nvim_buf_delete(vim.g.terminal_buf_id, { force = true, })
-
-		vim.g.terminal_buf_id = nil
-		vim.g.terminal_win_id = nil
-	end
-end
-
-function RefreshLayout()
-	DeleteLayout()
-	MakeLayout()
-end
-
--- vim.schedule(RefreshLayout)
-
-vim.api.nvim_create_user_command('ChangeFileTreeDir',
-function (opts)
-	ChangeFileTreeDir(opts.args)
-end,
-{ nargs = 1 })
-
-vim.api.nvim_create_user_command('MakeFileTree',
-function ()
-	MakeFileTree()
-end,
-{ nargs = 0 })
-
-vim.api.nvim_create_user_command('MakeLayout',
-function ()
-	MakeLayout()
-end,
-{ nargs = 0 })
-
-vim.api.nvim_create_user_command('DeleteLayout',
-function ()
-	DeleteLayout()
-end,
-{ nargs = 0 })
-
-vim.api.nvim_create_user_command('RefreshLayout',
-function ()
-	RefreshLayout()
-end,
-{ nargs = 0 })

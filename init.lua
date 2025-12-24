@@ -31,7 +31,7 @@ require('custom.DeleteSurround')
 require('custom.ChangeSurround')
 require('custom.TextObjMotion')
 require('custom.MakeSet')
-require('custom.IDE')
+require('custom.new_plugin')
 
 ------------------------------------------------------------------------------
 -- User Configs                                                             --
