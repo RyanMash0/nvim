@@ -207,7 +207,6 @@ function AscendFileTree()
 	vim.schedule(function ()
 		local new_path = vim.fs.abspath('.'):gsub('/[^/]+$', '')
 		if new_path == '' then new_path = '/' end
-		vim.print(new_path)
 		ChangeFileTreeDir(new_path)
 	end)
 end

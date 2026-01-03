@@ -1,7 +1,7 @@
 return {
-	{
-		src = 'jbyuki/nabla.nvim',
-	},
+	-- {
+	-- 	src = 'jbyuki/nabla.nvim',
+	-- },
 	{
 		src = 'MeanderingProgrammer/render-markdown.nvim',
 		dependencies = { 'nvim-mini/mini.nvim', },

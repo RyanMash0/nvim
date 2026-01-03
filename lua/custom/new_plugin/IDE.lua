@@ -94,12 +94,24 @@ function MakeLayout()
 		buf_bar_switch()
 		return '<LeftMouse>'
 	end, buf_bar_opts)
-	vim.keymap.set('n', 'w', function ()
-		vim.fn.search('[^ \\u2502]\\+', 'W', vim.fn.line('.'))
-	end, { buffer = bufBar, remap = false })
-	vim.keymap.set('n', 'b', function ()
-		vim.fn.search('[^ \\u2502]\\+', 'Wb', vim.fn.line('.'))
-	end, { buffer = bufBar, remap = false })
+
+	local function generate_buf_scroll(flags)
+		return function ()
+			local pos = vim.fn.col('.')
+			vim.fn.search('[^ \\u2502]\\+', flags, vim.fn.line('.'))
+			local new_pos = vim.fn.col('.')
+			if new_pos == pos and new_pos > 3 then
+				vim.cmd.normal('$b')
+			elseif new_pos == pos then
+				vim.cmd.normal('0w')
+			end
+		end
+	end
+
+	vim.keymap.set('n', 'w', generate_buf_scroll('W'), { buffer = bufBar, remap = false })
+	vim.keymap.set('n', 'b', generate_buf_scroll('Wb'), { buffer = bufBar, remap = false })
+	vim.keymap.set('n', '<S-ScrollWheelUp>', 'w', { buffer = bufBar, remap = true })
+	vim.keymap.set('n', '<S-ScrollWheelDown>', 'b', { buffer = bufBar, remap = true })
 
 	MakeFileTree()
 	MakeBufferBar()
