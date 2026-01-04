@@ -49,6 +49,11 @@ vim.keymap.set('i', '<BS>', function()
 	return '<BS>'
 end, { expr = true })
 
+-- IDEify
+vim.keymap.set('n', L..'lt', ':IDEifyToggle<CR>')
+vim.keymap.set('n', L..'lo', ':IDEifyOpen<CR>')
+vim.keymap.set('n', L..'lc', ':IDEifyClose<CR>')
+
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')
 

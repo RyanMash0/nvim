@@ -7,8 +7,6 @@
 - Add buffer bar highlight group check
 - Add terminal buffers
 - Modified status in buffer bar
-- Make MakeLayout work with multiple main windows (delete and then replace
-  others through caching)
 - Allow moving tabs
 - Add rename in file tree
 - Add delete in file tree
