@@ -8,7 +8,6 @@ return {
 
 		-- Exclude these paths from Telescope search
 		local exclude_dirs = {
-			'**/lazy/**',
 			'**/swap/**',
 			'**/shada/**',
 			'**/\\.git/**',

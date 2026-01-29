@@ -6,14 +6,12 @@ package.loaded['config.keymaps'] = nil
 package.loaded['config.options'] = nil
 package.loaded['config.lsp'] = nil
 package.loaded['config.completion'] = nil
-package.loaded['config.markdown'] = nil
 
 require('config.keymaps')
 require('config.pack')
 require('config.options')
 require('config.lsp')
 require('config.completion')
-require('config.markdown')
 
 -------------------------------------------------------------------------------
 -- Custom Plugins                                                            --

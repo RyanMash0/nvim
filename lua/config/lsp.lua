@@ -42,3 +42,27 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("pyright")
 vim.lsp.enable("texlab")
 vim.lsp.enable("ts_ls")
+
+vim.api.nvim_create_augroup('lsp_treesitter', { clear = true })
+vim.api.nvim_create_autocmd('FileType', {
+	group = 'lsp_treesitter',
+	callback = function (args)
+		-- vim.print(args)
+		if args.match == 'netrw' then return end
+		local lang = vim.treesitter.language.get_lang(args.match)
+
+		local parser_count = #vim.api.nvim_get_runtime_file(
+			'parser/'..lang..'.so', true
+		)
+
+		local delay = 0
+		if parser_count < 1 then
+			require('nvim-treesitter').install(lang)
+			delay = 30000
+		end
+
+		vim.defer_fn(function ()
+			vim.treesitter.start(args.buf, lang)
+		end, delay)
+	end
+})

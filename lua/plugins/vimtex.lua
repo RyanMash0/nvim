@@ -6,6 +6,7 @@ return {
 		-- Change which of these lines is commented based on os
 		-- vim.g.vimtex_view_method = "zathura" -- Linux
 		vim.g.vimtex_view_method = "skim" -- MacOS
+		vim.g.vimtex_syntax_conceal_disable = 1
 
 		local latexmk_engine = {}
 		latexmk_engine._ = '-lualatex --shell-escape'

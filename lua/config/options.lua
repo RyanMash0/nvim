@@ -11,6 +11,7 @@ vim.opt.scrolloff = 5
 vim.opt.conceallevel = 2
 vim.cmd('colorscheme gruvbox-material')
 vim.g.netrw_list_hide = '.DS_Store'
+vim.opt.linebreak = true
 
 -- Completion menu
 vim.opt.completeopt = {'menuone','noselect','popup'}
