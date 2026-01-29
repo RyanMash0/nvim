@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 -- Keymaps                                                                   --
 -------------------------------------------------------------------------------
-require('config.texmaps')
+-- require('config.texmaps')
 
 -- Leader
 local L = '<Leader>'
@@ -15,31 +15,32 @@ vim.keymap.set('n', '<LeftRelease>', '<Nop>', { remap = false })
 vim.keymap.set('n', L..'<LeftDrag>', '<LeftDrag>', { remap = false })
 vim.keymap.set('n', L..'<LeftRelease>', '<LeftRelease>', { remap = false })
 
--- Definition
+-- LSP
 vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>')
 
 -- Completion
 vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
 vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
 vim.cmd("inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<CR>'")
--- vim.keymap.set('i', '<Tab>', function()
+-- vim.keymap.set('i', '<Tab>', vim.schedule_wrap(function()
 -- 	if vim.fn.pumvisible() then
 -- 		return '<C-n>'
 -- 	end
 -- 	return '<Tab>'
--- end, { expr = true })
--- vim.keymap.set('i', '<S-Tab>', function()
+-- end), { expr = true })
+-- vim.keymap.set('i', '<S-Tab>', vim.schedule_wrap(function()
 -- 	if vim.fn.pumvisible() then
 -- 		return '<C-p>'
 -- 	end
 -- 	return '<S-Tab>'
--- end, { expr = true })
--- vim.keymap.set('i', '<CR>', function()
+-- end), { expr = true })
+-- vim.keymap.set('i', '<CR>', vim.schedule_wrap(function()
 -- 	if vim.fn.pumvisible() then
 -- 		return '<C-y>'
 -- 	end
 -- 	return '<CR>'
--- end, { expr = true })
+-- end), { expr = true })
 vim.keymap.set('i', '<BS>', function()
 	local pos = vim.api.nvim_win_get_cursor(0)[2] - 1
 	local line = vim.api.nvim_get_current_line()
@@ -48,6 +49,14 @@ vim.keymap.set('i', '<BS>', function()
 	end
 	return '<BS>'
 end, { expr = true })
+
+-- IDEify
+vim.keymap.set('n', L..'lo', '<Cmd>IDEifyOpen<CR>')
+vim.keymap.set('n', L..'lc', '<Cmd>IDEifyClose<CR>')
+vim.keymap.set('n', L..'ls', '<Cmd>IDEifyShow<CR>')
+vim.keymap.set('n', L..'lh', '<Cmd>IDEifyHide<CR>')
+vim.keymap.set('n', L..'lt', '<Cmd>IDEifyToggle<CR>')
+vim.keymap.set('n', L..'lr', '<Cmd>IDEifyResetSize<CR>')
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')

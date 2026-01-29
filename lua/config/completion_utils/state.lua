@@ -1,4 +1,9 @@
 -------------------------------------------------------------------------------
--- Bugs List                                                                 --
+-- LSP Completion State                                                      --
 -------------------------------------------------------------------------------
-? Fix escape bug with PreSurround
+local M = {}
+
+M.pum_docs_buf = nil
+M.pum_docs_win = nil
+
+return M

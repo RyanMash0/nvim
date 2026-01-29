@@ -48,19 +48,19 @@ function LspConvert(item)
 
 	-- Set the info portion of the neovim complete-item to be either the 
 	-- CompletionItem's documentation or its detail
-	local info
-	if type(item.documentation) == "table" then
-		info = item.documentation.value
-	elseif type(item.documentation) == "string" then
-		info = item.documentation
-	else
-		info = item.detail
-	end
+
+	-- local menu
+	-- if not item.documentation and item.detail and item.detail:match('%w%.%w') then
+	-- 	menu = ''
+	-- else
+	-- 	menu = truncate(item.detail, 20)
+	-- end
 
 	return {
 		abbr = truncate(label, 20),
-		menu = truncate(item.detail, 30),
-		info = info,
+		-- menu = menu,
+		menu = truncate(item.detail, 20),
+		info = '',
 		kind = icon .. ' ' .. kind_name,
 		kind_hlgroup = 'CmpItemKind' .. kind_name,
 	}
