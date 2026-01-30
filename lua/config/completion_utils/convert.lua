@@ -1,33 +1,34 @@
 -------------------------------------------------------------------------------
 -- LSP Completion Conversion Utility                                         --
 -------------------------------------------------------------------------------
+
 -- Symbols that go before the kind of the completion entry
-local lsp_kind_symbol = {
-	Text  = '',
-	Method  = '',
-	Function  = '',
-	Constructor  = '',
-	Field  = '',
-	Variable  = '',
-	Class  = '',
-	Interface  = '',
-	Module  = '',
-	Property = '',
-	Unit = '',
-	Value = '',
-	Enum = '',
-	Keyword = '',
-	Snippet = '',
-	Color = '',
-	File = '',
-	Reference = '',
-	Folder = '',
-	EnumMember = '',
-	Constant = '',
-	Struct = '',
-	Event = '',
-	Operator = '',
-	TypeParameter = '',
+local lsp_kind = {
+	Text					= {'', 'TSText'},
+	Method				= {'', 'TSMethod'},
+	Function			= {'', 'TSFunction'},
+	Constructor		= {'', 'TSConstructor'},
+	Field					= {'', 'TSField'},
+	Variable			= {'', 'TSVariable'},
+	Class					= {'', 'TSType'},
+	Interface			= {'', 'TSType'},
+	Module				= {'', 'TSNamespace'},
+	Property			= {'', 'TSProperty'},
+	Unit					= {'', 'Purple'},
+	Value					= {'', 'Purple'},
+	Enum					= {'', 'TSType'},
+	Keyword				= {'', 'TSKeyword'},
+	Snippet				= {'', 'Aqua'},
+	Color					= {'', 'Aqua'},
+	File					= {'', 'Green'},
+	Reference			= {'', 'TSTextReference'},
+	Folder				= {'', 'Aqua'},
+	EnumMember		= {'', 'TSProperty'},
+	Constant			= {'', 'TSConstant'},
+	Struct				= {'', 'TSType'},
+	Event					= {'', 'TSLabel'},
+	Operator			= {'', 'TSOperator'},
+	TypeParameter	= {'', 'TSTypeDefinition'},
 }
 
 --- Shorten a string to be at most max characters
@@ -44,7 +45,7 @@ function LspConvert(item)
 	local label = item.label:gsub('%b()', ''):gsub('[%s%.%-:][%s%.%-:]+.*$', '')
 	local kind_name = vim.lsp.protocol.CompletionItemKind[item.kind]
 	or "Text"
-	local icon = lsp_kind_symbol[kind_name] or " "
+	local icon = lsp_kind[kind_name][1] or " "
 
 	-- Set the info portion of the neovim complete-item to be either the 
 	-- CompletionItem's documentation or its detail
@@ -62,6 +63,6 @@ function LspConvert(item)
 		menu = truncate(item.detail, 20),
 		info = '',
 		kind = icon .. ' ' .. kind_name,
-		kind_hlgroup = 'CmpItemKind' .. kind_name,
+		kind_hlgroup = lsp_kind[kind_name][2],
 	}
 end

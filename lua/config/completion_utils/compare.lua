@@ -1,16 +1,10 @@
 -------------------------------------------------------------------------------
 -- LSP Completion Comparison Utility                                         --
 -------------------------------------------------------------------------------
+
 --- Helper function that gets an entry formatted as an LSP CompletionItem
--- The details of why this function is written this way are complicated and
--- hard to find. The way I was able to determine this structure was by printing
--- out the user_data field that gets set for a neovim complete-item
 local function get_ci(entry)
-  return entry
-    and entry.user_data
-    and entry.user_data.nvim
-    and entry.user_data.nvim.lsp
-    and entry.user_data.nvim.lsp.completion_item
+  return entry.user_data.nvim.lsp.completion_item
 end
 
 --- Safe string function

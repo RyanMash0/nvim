@@ -71,8 +71,8 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				state.pum_docs_buf = vim.api.nvim_create_buf(false, false)
 				vim.bo[state.pum_docs_buf].filetype = 'markdown'
 				vim.bo[state.pum_docs_buf].modifiable = false
-				vim.bo[state.pum_docs_buf].formatlistpat = "^\\s*\\d\\+\\.\\s\\+\\|^\\s*[-*+]\\s\\+\\|^\\[^\\ze[^\\]]\\+\\]:\\&^.\\{4\\}"
-				vim.bo[state.pum_docs_buf].formatoptions = "jtcqln"
+				--vim.bo[state.pum_docs_buf].formatlistpat = "^\\s*\\d\\+\\.\\s\\+\\|^\\s*[-*+]\\s\\+\\|^\\[^\\ze[^\\]]\\+\\]:\\&^.\\{4\\}"
+				--vim.bo[state.pum_docs_buf].formatoptions = "jtcqln"
 				vim.treesitter.start(state.pum_docs_buf, 'markdown')
 			end
 
