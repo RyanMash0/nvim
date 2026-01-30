@@ -49,8 +49,12 @@ vim.api.nvim_create_augroup('lsp_treesitter', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
 	group = 'lsp_treesitter',
 	callback = function (args)
-		-- vim.print(args)
-		if args.match == 'netrw' or args.match == 'man' then return end
+		if args.match == 'netrw'
+			or args.match == 'man'
+			or args.match == 'tex' then
+			return
+		end
+
 		local lang = vim.treesitter.language.get_lang(args.match)
 
 		local parser_count = #vim.api.nvim_get_runtime_file(
