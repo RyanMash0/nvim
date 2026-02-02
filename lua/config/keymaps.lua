@@ -1,7 +1,6 @@
 -------------------------------------------------------------------------------
 -- Keymaps                                                                   --
 -------------------------------------------------------------------------------
--- require('config.texmaps')
 
 -- Leader
 local L = '<Leader>'
@@ -16,31 +15,28 @@ vim.keymap.set('n', L..'<LeftDrag>', '<LeftDrag>', { remap = false })
 vim.keymap.set('n', L..'<LeftRelease>', '<LeftRelease>', { remap = false })
 
 -- LSP
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>')
+local function toggle_hints()
+	local enabled = vim.lsp.inlay_hint.is_enabled()
+	vim.lsp.inlay_hint.enable(not enabled)
+end
+
+vim.keymap.set('n', 'gd', function () vim.lsp.buf.definition() end)
+vim.keymap.set('n', 'gi', toggle_hints)
 
 -- Completion
-vim.cmd("inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'")
-vim.cmd("inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'")
-vim.cmd("inoremap <expr> <cr> pumvisible() ? '<C-y>' : '<CR>'")
--- vim.keymap.set('i', '<Tab>', vim.schedule_wrap(function()
--- 	if vim.fn.pumvisible() then
--- 		return '<C-n>'
--- 	end
--- 	return '<Tab>'
--- end), { expr = true })
--- vim.keymap.set('i', '<S-Tab>', vim.schedule_wrap(function()
--- 	if vim.fn.pumvisible() then
--- 		return '<C-p>'
--- 	end
--- 	return '<S-Tab>'
--- end), { expr = true })
--- vim.keymap.set('i', '<CR>', vim.schedule_wrap(function()
--- 	if vim.fn.pumvisible() then
--- 		return '<C-y>'
--- 	end
--- 	return '<CR>'
--- end), { expr = true })
+local function comp_act(input, default)
+	return function ()
+		if vim.fn.pumvisible() then
+			return input
+		end
+		return default
+	end
+end
+
+vim.keymap.set('i', '<Tab>', comp_act('<C-n>', '<Tab>'), { expr = true })
+vim.keymap.set('i', '<S-Tab>', comp_act('<C-p>', '<S-Tab>'), { expr = true })
+vim.keymap.set('i', '<CR>', comp_act('<C-y>', '<CR>'), { expr = true })
+
 vim.keymap.set('i', '<BS>', function()
 	local pos = vim.api.nvim_win_get_cursor(0)[2] - 1
 	local line = vim.api.nvim_get_current_line()
@@ -78,15 +74,6 @@ vim.keymap.set('n', L..'ds', ':DeleteSurround<CR>')
 
 -- ChangeSurround
 vim.keymap.set('n', L..'cs', ':ChangeSurround<CR>')
-
--- -- PreSurround
--- vim.keymap.set('i', '(<CR>', '<Esc>:PreSurround (<CR>')
--- vim.keymap.set('i', '[<CR>', '<Esc>:PreSurround [<CR>')
--- vim.keymap.set('i', '{<CR>', '<Esc>:PreSurround {<CR>')
--- vim.keymap.set('i', '{ <CR>', '<Esc>:PreSurround { <CR>')
--- vim.keymap.set('i', '<<CR>', '<Esc>:PreSurround <<CR>')
--- vim.keymap.set('i', '\"<CR>', '<Esc>:PreSurround \"<CR>')
--- vim.keymap.set('i', '\'<CR>', '<Esc>:PreSurround \'<CR>')
 
 -- Color Column
 vim.keymap.set('n', L..'c+', ':set colorcolumn=80<CR>')

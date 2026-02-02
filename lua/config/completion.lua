@@ -93,6 +93,7 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			local pum_pos = vim.fn.pum_getpos()
 
 			local width_offset = pum_pos.col + pum_pos.width + 2
+			local height_offset = pum_pos.row
 			local win_width = 0
 			local win_height = 0
 			for _, s in ipairs(docs) do
@@ -105,7 +106,10 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				end
 			end
 
-			if vim.go.columns - width_offset < win_width then
+			if vim.go.columns - width_offset <= 0 then
+				width_offset = pum_pos.col
+				height_offset = pum_pos.row + pum_pos.height + 2
+			elseif vim.go.columns - width_offset < win_width then
 				win_width = vim.go.columns - width_offset
 			end
 
@@ -137,8 +141,10 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			vim.api.nvim_buf_set_text(state.pum_docs_buf, 0, 0, -1, -1, docs)
 			vim.bo[state.pum_docs_buf].modifiable = false
 
+			vim.print(win_height)
+
 			local win_config = {
-				row = pum_pos.row,
+				row = height_offset,
 				col = width_offset,
 				width = win_width,
 				height = win_height,

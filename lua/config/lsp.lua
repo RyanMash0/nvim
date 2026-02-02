@@ -51,7 +51,8 @@ vim.api.nvim_create_autocmd('FileType', {
 	callback = function (args)
 		if args.match == 'netrw'
 			or args.match == 'man'
-			or args.match == 'tex' then
+			or args.match == 'tex'
+			or args.match == 'qf' then
 			return
 		end
 
