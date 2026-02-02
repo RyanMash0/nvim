@@ -26,7 +26,10 @@ vim.keymap.set('n', 'gi', toggle_hints)
 -- Completion
 local function comp_act(input, default)
 	return function ()
-		if vim.fn.pumvisible() then
+		local info = vim.fn.complete_info()
+		if input == '<C-y>' and info.pum_visible and info.selected >= 0 then
+			return input
+		elseif input ~= '<C-y>' and info.pum_visible then
 			return input
 		end
 		return default
