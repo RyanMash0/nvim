@@ -34,4 +34,4 @@ brew install typescript-language-server
 # brew install alacritty
 
 # Font:
-# brew install font-dejavu-sans-mono-nerd-font
+# brew install font-commit-mono-nerd-font

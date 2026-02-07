@@ -63,7 +63,8 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			return
 		end
 		local selected = cmp_info.items[cmp_info.selected + 1]
-		if not selected then return end
+		if not selected or selected.user_data == '' then return end
+		-- vim.print(selected)
 		local item = selected.user_data.nvim.lsp.completion_item
 
 		local resolve_handler = function(responses)
@@ -81,6 +82,7 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				state.pum_docs_win = nil
 			end
 
+			if not responses[1] then return end
 			local result = responses[1].result
 			if vim.fn.pumvisible() == 0 then return end
 			if not result.documentation and not result.detail then return end
