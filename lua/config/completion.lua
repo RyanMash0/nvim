@@ -64,7 +64,6 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 		end
 		local selected = cmp_info.items[cmp_info.selected + 1]
 		if not selected or selected.user_data == '' then return end
-		-- vim.print(selected)
 		local item = selected.user_data.nvim.lsp.completion_item
 
 		local resolve_handler = function(responses)
@@ -142,8 +141,6 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			vim.bo[state.pum_docs_buf].modifiable = true
 			vim.api.nvim_buf_set_text(state.pum_docs_buf, 0, 0, -1, -1, docs)
 			vim.bo[state.pum_docs_buf].modifiable = false
-
-			vim.print(win_height)
 
 			local win_config = {
 				row = height_offset,

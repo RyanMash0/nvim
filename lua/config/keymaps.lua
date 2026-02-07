@@ -54,6 +54,7 @@ vim.keymap.set('n', L..'ls', '<Cmd>IDEifyShow<CR>')
 vim.keymap.set('n', L..'lh', '<Cmd>IDEifyHide<CR>')
 vim.keymap.set('n', L..'lt', '<Cmd>IDEifyToggle<CR>')
 vim.keymap.set('n', L..'lr', '<Cmd>IDEifyResetSize<CR>')
+vim.keymap.set('n', L..'t', function () require('nvim-ideify.filetree'):get_ui() end)
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')
