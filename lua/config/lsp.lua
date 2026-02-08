@@ -51,6 +51,8 @@ vim.api.nvim_create_autocmd('FileType', {
 	callback = function (args)
 		local parsers = require('nvim-treesitter.parsers')
 		local lang = vim.treesitter.language.get_lang(args.match)
+		if lang == 'latex' then return end
+
 		if lang == nil or not parsers[lang] then
 			return
 		end

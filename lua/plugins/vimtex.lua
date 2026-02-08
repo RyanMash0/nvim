@@ -12,6 +12,7 @@ return {
 		latexmk_engine._ = '-lualatex --shell-escape'
 		vim.g.vimtex_compiler_latexmk_engines = latexmk_engine
 		vim.g.vimtex_mappings_enabled = 0
+		vim.g.vimtex_imaps_enabled = 0
 		vim.api.nvim_create_augroup('vimtex_config', { clear = true })
 		vim.api.nvim_create_autocmd('FileType', {
 			group = 'vimtex_config',
