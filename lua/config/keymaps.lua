@@ -4,15 +4,12 @@
 
 -- Leader
 local L = '<Leader>'
-vim.keymap.set('n', '-', ',')
-vim.keymap.set('n', ',', '<Nop>')
-vim.g.mapleader = ","
 
 -- Mouse
 vim.keymap.set('n', '<LeftDrag>', '<Nop>', { remap = false })
 vim.keymap.set('n', '<LeftRelease>', '<Nop>', { remap = false })
-vim.keymap.set('n', L..'<LeftDrag>', '<LeftDrag>', { remap = false })
-vim.keymap.set('n', L..'<LeftRelease>', '<LeftRelease>', { remap = false })
+vim.keymap.set('n', '<Tab><LeftDrag>', '<LeftDrag>', { remap = false })
+vim.keymap.set('n', '<Tab><LeftRelease>', '<LeftRelease>', { remap = false })
 
 -- LSP
 local function toggle_hints()
@@ -54,7 +51,7 @@ vim.keymap.set('n', L..'ls', '<Cmd>IDEifyShow<CR>')
 vim.keymap.set('n', L..'lh', '<Cmd>IDEifyHide<CR>')
 vim.keymap.set('n', L..'lt', '<Cmd>IDEifyToggle<CR>')
 vim.keymap.set('n', L..'lr', '<Cmd>IDEifyResetSize<CR>')
-vim.keymap.set('n', L..'t', function () require('nvim-ideify.filetree'):get_ui() end)
+vim.keymap.set('n', L..'t', function () require('nvim-ideify.filetree'):get_ui().render() end)
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')

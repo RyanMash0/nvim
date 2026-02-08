@@ -49,14 +49,11 @@ vim.api.nvim_create_augroup('lsp_treesitter', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
 	group = 'lsp_treesitter',
 	callback = function (args)
-		if args.match == 'netrw'
-			or args.match == 'man'
-			or args.match == 'tex'
-			or args.match == 'qf' then
+		local parsers = require('nvim-treesitter.parsers')
+		local lang = vim.treesitter.language.get_lang(args.match)
+		if lang == nil or not parsers[lang] then
 			return
 		end
-
-		local lang = vim.treesitter.language.get_lang(args.match)
 
 		local parser_count = #vim.api.nvim_get_runtime_file(
 			'parser/'..lang..'.so', true
@@ -69,6 +66,7 @@ vim.api.nvim_create_autocmd('FileType', {
 		end
 
 		vim.defer_fn(function ()
+			if not vim.api.nvim_buf_is_valid(args.buf) then return end
 			vim.treesitter.start(args.buf, lang)
 		end, delay)
 	end

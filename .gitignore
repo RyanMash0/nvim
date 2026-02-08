@@ -3,3 +3,5 @@ nvim-pack-lock.json
 bugs.txt
 Session.vim
 .DS_Store
+/lua/user/**/*.lua
+!/lua/user/init.lua

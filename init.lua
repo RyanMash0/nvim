@@ -1,6 +1,16 @@
 -------------------------------------------------------------------------------
 -- Neovim Config File                                                        --
 -------------------------------------------------------------------------------
+local leader_status, _ = pcall(require, 'user.leader')
+if not leader_status or vim.g.mapleader == nil then
+	vim.g.mapleader = ","
+	vim.keymap.set('n', '-', ',')
+	vim.keymap.set('n', ',', '<Nop>')
+end
+
+-------------------------------------------------------------------------------
+-- Default Configs                                                           --
+-------------------------------------------------------------------------------
 
 package.loaded['config.keymaps'] = nil
 package.loaded['config.options'] = nil
@@ -22,14 +32,12 @@ package.loaded['custom.PreSurround'] = nil
 package.loaded['custom.DeleteSurround'] = nil
 package.loaded['custom.ChangeSurround'] = nil
 package.loaded['custom.TextObjMotion'] = nil
--- package.loaded['custom.MakeSet'] = nil
 
 require('custom.PostSurround')
 require('custom.PreSurround')
 require('custom.DeleteSurround')
 require('custom.ChangeSurround')
 require('custom.TextObjMotion')
--- require('custom.MakeSet')
 
 ------------------------------------------------------------------------------
 -- User Configs                                                             --
