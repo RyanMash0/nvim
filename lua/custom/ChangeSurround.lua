@@ -25,7 +25,7 @@ end
 
 
 vim.api.nvim_create_user_command('ChangeSurround',
-	function ()
-		ChangeSurround()
-	end,
-	{ nargs = 0 })
+function ()
+	ChangeSurround()
+end,
+{ nargs = 0 })

@@ -7,6 +7,7 @@ return {
 		-- vim.g.vimtex_view_method = "zathura" -- Linux
 		vim.g.vimtex_view_method = "skim" -- MacOS
 		vim.g.vimtex_syntax_conceal_disable = 1
+		vim.g.vimtex_indent_enabled = 0
 
 		local latexmk_engine = {}
 		latexmk_engine._ = '-lualatex --shell-escape'
