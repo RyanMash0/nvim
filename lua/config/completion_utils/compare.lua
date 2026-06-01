@@ -1,7 +1,6 @@
 -------------------------------------------------------------------------------
 -- LSP Completion Comparison Utility                                         --
 -------------------------------------------------------------------------------
-
 --- Helper function that gets an entry formatted as an LSP CompletionItem
 local function get_ci(entry)
   return entry.user_data.nvim.lsp.completion_item
