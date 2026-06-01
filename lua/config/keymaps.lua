@@ -18,6 +18,7 @@ end
 
 vim.keymap.set('n', 'gd', function () vim.lsp.buf.definition() end)
 vim.keymap.set('n', 'gi', toggle_hints)
+vim.keymap.set('i', '<C-s>', function() vim.lsp.buf.signature_help() end)
 
 -- Completion
 local function comp_act(input, default)

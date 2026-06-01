@@ -14,6 +14,8 @@ vim.g.netrw_list_hide = '.DS_Store'
 vim.opt.linebreak = true
 vim.opt.breakindent = true
 
+vim.opt.winborder = 'rounded'
+
 -- Completion menu
 vim.opt.completeopt = {'menuone','noselect','popup'}
 vim.opt.ignorecase = true
@@ -34,7 +36,7 @@ vim.opt.mousetime = 0
 vim.api.nvim_create_augroup('options_text_files', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
 	group = 'options_text_files',
-	pattern = { 'tex', 'text', 'markdown', 'gitcommit' },
+	pattern = { 'tex', 'text', 'gitcommit' },
 	callback = function ()
 		vim.opt_local.spell = true
 		vim.opt_local.spelllang = 'en_us'

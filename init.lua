@@ -9,7 +9,7 @@ if not leader_status or vim.g.mapleader == nil then
 end
 
 -------------------------------------------------------------------------------
--- Default Configs                                                           --
+-- Standard Configs                                                          --
 -------------------------------------------------------------------------------
 
 package.loaded['config.keymaps'] = nil

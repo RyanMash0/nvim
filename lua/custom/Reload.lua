@@ -8,3 +8,10 @@ function ()
 	vim.cmd('restart source ' .. path)
 end,
 { nargs = 0 })
+
+vim.api.nvim_create_user_command('LoadLastReload',
+function ()
+	local path = '~/.config/nvim/nvim_reload_session.vim'
+	vim.cmd('source ' .. path)
+end,
+{ nargs = 0 })
