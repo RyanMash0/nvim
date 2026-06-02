@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 -- Options                                                                   --
 -------------------------------------------------------------------------------
+vim.api.nvim_create_augroup('options', { clear = true })
+
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.timeout = false
@@ -13,6 +15,7 @@ vim.cmd('colorscheme gruvbox-material')
 vim.g.netrw_list_hide = '.DS_Store'
 vim.opt.linebreak = true
 vim.opt.breakindent = true
+vim.opt.undofile = true
 
 vim.opt.winborder = 'rounded'
 
@@ -32,10 +35,22 @@ vim.api.nvim_set_hl(0, 'PmenuMatch', { link = 'CmpItemAbbrMatch' })
 -- Mouse
 vim.opt.mousetime = 0
 
+-- Save View
+vim.opt.viewoptions = { 'folds', 'cursor' }
+vim.api.nvim_create_autocmd('BufWinLeave', {
+	group = 'options',
+	pattern = '?*',
+	command = 'silent! mkview'
+})
+vim.api.nvim_create_autocmd('BufWinEnter', {
+	group = 'options',
+	pattern = '?*',
+	command = 'silent! loadview'
+})
+
 -- Text Files
-vim.api.nvim_create_augroup('options_text_files', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
-	group = 'options_text_files',
+	group = 'options',
 	pattern = { 'tex', 'text', 'gitcommit' },
 	callback = function ()
 		vim.opt_local.spell = true

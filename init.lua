@@ -13,6 +13,7 @@ end
 -------------------------------------------------------------------------------
 
 package.loaded['config.keymaps'] = nil
+package.loaded['config.pack'] = nil
 package.loaded['config.options'] = nil
 package.loaded['config.lsp'] = nil
 package.loaded['config.completion'] = nil
