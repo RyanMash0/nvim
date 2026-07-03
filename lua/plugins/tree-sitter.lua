@@ -17,7 +17,6 @@ return {
 	},
 	config = vim.schedule(function()
 		vim.api.nvim_create_autocmd('VimLeave', {
-			group = 'pack',
 			callback = function()
 				vim.cmd.TSUpdate()
 			end
