@@ -1,9 +1,15 @@
 -------------------------------------------------------------------------------
 -- Reload Plugin                                                             --
 -------------------------------------------------------------------------------
+local path = vim.fn.stdpath('data')
+path = vim.fs.joinpath(path, 'sessions')
+
+vim.uv.fs_mkdir(path, tonumber('755', 8))
+
+path = vim.fs.joinpath(path, 'reload_session.vim')
+
 vim.api.nvim_create_user_command('Reload',
 function ()
-	local path = '~/.config/nvim/nvim_reload_session.vim'
 	vim.cmd('mksession! ' .. path)
 	vim.cmd('restart source ' .. path)
 end,
@@ -11,7 +17,6 @@ end,
 
 vim.api.nvim_create_user_command('LoadLastReload',
 function ()
-	local path = '~/.config/nvim/nvim_reload_session.vim'
 	vim.cmd('source ' .. path)
 end,
 { nargs = 0 })

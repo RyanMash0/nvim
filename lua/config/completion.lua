@@ -71,8 +71,6 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				state.pum_docs_buf = vim.api.nvim_create_buf(false, false)
 				vim.bo[state.pum_docs_buf].filetype = 'markdown'
 				vim.bo[state.pum_docs_buf].modifiable = false
-				--vim.bo[state.pum_docs_buf].formatlistpat = "^\\s*\\d\\+\\.\\s\\+\\|^\\s*[-*+]\\s\\+\\|^\\[^\\ze[^\\]]\\+\\]:\\&^.\\{4\\}"
-				--vim.bo[state.pum_docs_buf].formatoptions = "jtcqln"
 				vim.treesitter.start(state.pum_docs_buf, 'markdown')
 			end
 
@@ -81,9 +79,10 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				state.pum_docs_win = nil
 			end
 
-			if not responses[1] then return end
-			local result = responses[1].result
 			if vim.fn.pumvisible() == 0 then return end
+			local _, response = next(responses)
+			if not response then return end
+			local result = response.result
 			if not result.documentation and not result.detail then return end
 			local docs
 			if not result.documentation then
@@ -93,7 +92,16 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			end
 			local pum_pos = vim.fn.pum_getpos()
 
-			local width_offset = pum_pos.col + pum_pos.width + 2
+			local extra = 0
+			if vim.o.pumborder ~= '' then
+				extra = 2
+			end
+			if extra == 0 and #cmp_info.items > vim.o.pumheight then
+				extra = 1
+			end
+			local pumborder = vim.o.pumborder ~= '' and 2 or 0
+			local winborder = vim.o.winborder ~= 'none' and 2 or 0
+			local width_offset = pum_pos.col + pum_pos.width + extra
 			local height_offset = pum_pos.row
 			local win_width = 0
 			local win_height = 0
@@ -107,12 +115,55 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				end
 			end
 
-			if vim.go.columns - width_offset <= 0 then
-				width_offset = pum_pos.col
-				height_offset = pum_pos.row + pum_pos.height + 2
-			elseif vim.go.columns - width_offset < win_width then
-				win_width = vim.go.columns - width_offset
+			local function adjust_width()
+				local threshold = 25
+				local width = win_width + winborder
+				local space_r = vim.go.columns - width_offset
+				local space_l = pum_pos.col - 1
+				local no_space_r = space_r <= 0
+				local no_space_l = space_l <= 0
+				local too_big_r = space_r - width <= 0
+				local too_big_l = space_l - width <= 0
+				local adj_width_r = space_r - winborder
+				local adj_width_l = space_l - winborder
+				local too_small_adj_l = adj_width_l <= threshold
+				local too_small_adj_r = adj_width_r <= threshold
+				local good = not no_space_r and not too_big_r
+				local no_right = not good and (no_space_r or too_small_adj_r)
+				local no_left = not good and (no_space_l or too_small_adj_l)
+
+				if good then return end
+
+				-- If there is no space on either side
+				if no_right and no_left then
+					width_offset = pum_pos.col
+					height_offset = pum_pos.row + pum_pos.height + pumborder
+					win_width = math.min(vim.go.columns - winborder, win_width)
+					return
+				end
+
+				-- If there is space on the left, but no space on the right and the
+				-- window needs to shrink
+				if no_right and not too_big_l then
+					width_offset = space_l - width
+					return
+				end
+
+				-- If there is space on the left, but no space on the right and the
+				-- window does not need to shrink
+				if no_right then
+					win_width = space_l - winborder
+					return
+				end
+
+				-- If there is space on the right, but the window needs to shrink
+				if too_big_r then
+					win_width = space_r - winborder
+					return
+				end
 			end
+
+			adjust_width()
 
 			local divider = ''
 			for _ = 1, win_width do
@@ -121,7 +172,7 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 
 			local encoded
 			for i = #docs, 1, -1 do
-				encoded = docs[i]:match('!%[[^%]]+]')
+				encoded = docs[i]:match('!%[[^%]]+%]')
 				if #docs[i] > win_width and not encoded then
 					win_height = win_height + math.ceil(#docs[i] / win_width) - 1
 				end

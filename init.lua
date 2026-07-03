@@ -12,15 +12,15 @@ end
 -- Standard Configs                                                          --
 -------------------------------------------------------------------------------
 
-package.loaded['config.keymaps'] = nil
 package.loaded['config.pack'] = nil
+package.loaded['config.keymaps'] = nil
 package.loaded['config.options'] = nil
 package.loaded['config.lsp'] = nil
 package.loaded['config.completion'] = nil
 package.loaded['config.ui'] = nil
 
-require('config.keymaps')
 require('config.pack')
+require('config.keymaps')
 require('config.options')
 require('config.lsp')
 require('config.completion')

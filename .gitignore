@@ -2,7 +2,6 @@ lazy-lock.json
 nvim-pack-lock.json
 bugs.txt
 Session.vim
-nvim_reload_session.vim
 .DS_Store
 /lua/user/**/*.lua
 !/lua/user/init.lua

@@ -22,7 +22,7 @@ vim.opt.foldlevelstart = 99
 vim.opt.winborder = 'rounded'
 
 -- Completion menu
-vim.opt.completeopt = {'menuone','noselect','popup'}
+vim.opt.completeopt = {'menuone','noselect'}
 vim.opt.ignorecase = true
 
 -- Popup menu

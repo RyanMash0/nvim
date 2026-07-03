@@ -18,7 +18,6 @@ end
 
 vim.keymap.set('n', 'gd', function () vim.lsp.buf.definition() end)
 vim.keymap.set('n', 'gi', toggle_hints)
-vim.keymap.set('i', '<C-s>', function() vim.lsp.buf.signature_help() end)
 
 -- Completion
 local function comp_act(input, default)
@@ -44,14 +43,14 @@ vim.keymap.set('i', '<BS>', function()
 	return '<BS>'
 end, { expr = true })
 
--- IDEify
-vim.keymap.set('n', L..'lo', '<Cmd>IDEifyOpen<CR>')
-vim.keymap.set('n', L..'lc', '<Cmd>IDEifyClose<CR>')
-vim.keymap.set('n', L..'ls', '<Cmd>IDEifyShow<CR>')
-vim.keymap.set('n', L..'lh', '<Cmd>IDEifyHide<CR>')
-vim.keymap.set('n', L..'lt', '<Cmd>IDEifyToggle<CR>')
-vim.keymap.set('n', L..'lr', '<Cmd>IDEifyResetSize<CR>')
-vim.keymap.set('n', L..'t', function () require('nvim-ideify.filetree'):get_ui().render() end)
+-- Panels
+vim.keymap.set('n', L..'lo', '<Cmd>PanelsOpen<CR>')
+vim.keymap.set('n', L..'lc', '<Cmd>PanelsClose<CR>')
+vim.keymap.set('n', L..'ls', '<Cmd>PanelsShow<CR>')
+vim.keymap.set('n', L..'lh', '<Cmd>PanelsHide<CR>')
+vim.keymap.set('n', L..'lt', '<Cmd>PanelsToggleAll<CR>')
+vim.keymap.set('n', L..'lr', '<Cmd>PanelsReset<CR>')
+vim.keymap.set('n', L..'lR', '<Cmd>PanelsHardReset<CR>')
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')
@@ -60,8 +59,8 @@ vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')
 vim.keymap.set('n', L..'w', '<C-w>')
 
 -- Buffers
-vim.keymap.set('n', L..'n', '<Cmd>bn<CR>')
-vim.keymap.set('n', L..'b', '<Cmd>bp<CR>')
+vim.keymap.set('n', L..'n', '<Cmd>PanelsBufNext<CR>')
+vim.keymap.set('n', L..'b', '<Cmd>PanelsBufPrev<CR>')
 vim.keymap.set('n', L..'d<CR>', '<Cmd>bp | bd #<CR>')
 
 -- Surround

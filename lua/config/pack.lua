@@ -4,8 +4,9 @@
 table.unpack = table.unpack or unpack
 
 local plugin_dir = 'plugins'
-local config_dir = '.config/nvim/lua'
-local home_dir = os.getenv('HOME') or os.getenv('USERPROFILE')
+local full_dir = vim.fs.joinpath('lua', plugin_dir)
+local config_dir = vim.fn.stdpath('config')
+full_dir = vim.fs.joinpath(config_dir, full_dir)
 Plugins = {}
 
 function Plugins:add_plugin_from_file(file)
@@ -16,16 +17,16 @@ function Plugins:add_plugin_from_file(file)
 end
 
 local plugin_files = vim.fs.find(function(name)
-	return name:match('[^/%.]+%.lua$')
+	return name:match('%.lua$') and true or false
 end, {
 	limit = math.huge,
 	type = 'file',
-	path = home_dir..'/'..config_dir..'/'..plugin_dir,
+	path = full_dir,
 })
 
 local path_str
 for _, path in ipairs(plugin_files) do
-	path_str = plugin_dir .. '.' .. path:match('[^/]+$'):match('^[^%.]+')
+	path_str = plugin_dir .. '.' .. vim.fs.basename(path):match('^[^%.]+')
 	Plugins:add_plugin_from_file(require(path_str))
 end
 
@@ -81,9 +82,9 @@ vim.api.nvim_create_user_command('PackUpdate',
 )
 
 vim.api.nvim_create_augroup('pack', { clear = true })
-vim.api.nvim_create_autocmd('VimEnter', {
+vim.api.nvim_create_autocmd('VimLeave', {
 	group = 'pack',
 	callback = function()
-		vim.cmd.PackUpdate()
+		PackUpdate()
 	end
 })
