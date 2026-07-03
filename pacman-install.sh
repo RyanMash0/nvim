@@ -10,6 +10,7 @@ yay -Syu --needed neovim-nightly-bin
 # Packages:
 sudo pacman -Sy --needed tree-sitter-cli
 sudo pacman -Sy --needed ripgrep
+sudo pacman -Sy --needed fd
 sudo pacman -Sy --needed texlive
 
 # Language Servers:

@@ -13,6 +13,7 @@ brew link neovim --HEAD
 # Packages:
 brew install tree-sitter-cli
 brew install ripgrep
+brew install fd
 brew install --cask mactex-no-gui
 
 # Language Servers:

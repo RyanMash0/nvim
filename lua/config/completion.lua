@@ -143,16 +143,17 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				end
 
 				-- If there is space on the left, but no space on the right and the
-				-- window needs to shrink
+				-- window does not need to shrink
 				if no_right and not too_big_l then
 					width_offset = space_l - width
 					return
 				end
 
 				-- If there is space on the left, but no space on the right and the
-				-- window does not need to shrink
+				-- window needs to shrink
 				if no_right then
 					win_width = space_l - winborder
+					width_offset = 0
 					return
 				end
 
