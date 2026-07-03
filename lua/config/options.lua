@@ -16,8 +16,6 @@ vim.g.netrw_list_hide = '.DS_Store'
 vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.undofile = true
-vim.opt.foldmethod = 'expr'
-vim.opt.foldlevelstart = 99
 
 vim.opt.winborder = 'rounded'
 
