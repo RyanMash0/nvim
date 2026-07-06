@@ -1,6 +1,7 @@
 return {
 	-- Gruvbox Material Color Scheme
 	src = 'sainnhe/gruvbox-material',
+	preload = true,
 	config = function ()
 		vim.g.gruvbox_material_background = 'hard'
 		vim.g.gruvbox_material_foreground = 'original'

@@ -17,7 +17,7 @@ require('vim._core.ui2').enable({
 			list_cmd = 'pager',
 			lua_error = 'pager',
 			lua_print = 'msg',
-			progress = 'pager',
+			progress = 'msg',
 			rpc_error = 'pager',
 			quickfix = 'msg',
 			search_cmd = 'cmd',
@@ -30,20 +30,19 @@ require('vim._core.ui2').enable({
 			verbose = 'pager',
 			wildlist = 'cmd',
 			wmsg = 'msg',
-			typed_cmd = 'cmd',
 		},
 		cmd = {
-			height = 0.5,
+			height = 0.5, -- default
 		},
 		dialog = {
-			height = 0.5,
+			height = 0.5, -- default
 		},
 		msg = {
-			height = 0.3,
-			timeout = 5000,
+			height = 0.5, -- default
+			timeout = 5000, -- default: 4000
 		},
 		pager = {
-			height = 0.5,
+			height = 0.5, -- default: 0.999
 		},
 	},
 })

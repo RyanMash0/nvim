@@ -1,6 +1,5 @@
 return {
 	src = 'nvim-treesitter/nvim-treesitter',
-	lazy = false,
 	opts = {
 		ensure_installed = {
 			'markdown',
@@ -15,11 +14,5 @@ return {
 			enable = true,
 		},
 	},
-	config = vim.schedule(function()
-		vim.api.nvim_create_autocmd('VimLeave', {
-			callback = function()
-				vim.cmd.TSUpdate()
-			end
-		})
-	end),
+	build = 'TSUpdate',
 }
