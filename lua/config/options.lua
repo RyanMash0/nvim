@@ -20,8 +20,7 @@ vim.opt.undofile = true
 vim.opt.winborder = 'rounded'
 
 -- Completion menu
-vim.opt.completeopt = {'menuone','noselect'}
-vim.opt.ignorecase = true
+vim.opt.completeopt = {'menuone','noselect', 'fuzzy'}
 
 -- Popup menu
 vim.opt.pumborder = "rounded"

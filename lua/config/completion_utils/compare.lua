@@ -3,7 +3,11 @@
 -------------------------------------------------------------------------------
 --- Helper function that gets an entry formatted as an LSP CompletionItem
 local function get_ci(entry)
-  return entry.user_data.nvim.lsp.completion_item
+	return entry and
+	entry.user_data and
+	entry.user_data.nvim and
+	entry.user_data.nvim.lsp and
+	entry.user_data.nvim.lsp.completion_item
 end
 
 --- Safe string function
@@ -66,23 +70,23 @@ function LspCmp(a, b)
 
 	-- Clip both labels to be the same length for alphabetical comparison
 	local min_label_len = math.min(#a_label, #b_label)
-	local a_format_label = a_label:sub(1, min_label_len):lower()
-	local b_format_label = b_label:sub(1, min_label_len):lower()
+	local a_format_label = a_label:sub(1, min_label_len):lower():gsub('_', '~')
+	local b_format_label = b_label:sub(1, min_label_len):lower():gsub('_', '~')
 
 	-- Get whether the case of the CompletionItem matches what has been typed
 	local a_case = case_prefix_score(a_label, prefix)
 	local b_case = case_prefix_score(b_label, prefix)
 
 	-- Weigh different sorting factors:
-	-- -label: compares the labels alphabetically, alphabetically earlier entries
-	--  	will come first, lowest weight
-	-- -label_len: compares the lengths of the labels, shorter entries will come
-	--  	first, middle weight
-	-- -case: compares the case-sensitive match of the label and what has been
+	-- - label_len: compares the lengths of the labels, shorter entries will come
+	--  	first, lowest weight
+	-- - label: compares the labels alphabetically, alphabetically earlier entries
+	--  	will come first, middle weight
+	-- - case: compares the case-sensitive match of the label and what has been
 	--  	typed, entries that match case score higher, highest weight
 	local cmp = {
-		label = compare(a_format_label, b_format_label, -10),
-		label_len = compare(#a_label, #b_label, -100),
+		label_len = compare(#a_label, #b_label, -10),
+		label = compare(a_format_label, b_format_label, -100),
 		case = compare(a_case, b_case, 1000),
 	}
 

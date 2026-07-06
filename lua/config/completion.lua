@@ -91,6 +91,7 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 				docs = vim.lsp.util.convert_input_to_markdown_lines(result.documentation.value)
 			end
 			local pum_pos = vim.fn.pum_getpos()
+			local image_lines = {}
 
 			local extra = 0
 			if vim.o.pumborder ~= '' then
@@ -105,12 +106,17 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			local height_offset = pum_pos.row
 			local win_width = 0
 			local win_height = 0
-			for _, s in ipairs(docs) do
-				if #s > win_width then
+			local image
+			for i, s in ipairs(docs) do
+				image = s:match('!%[[^%]]+%]')
+				if not image and #s > win_width then
 					win_width = #s
+				elseif image and #image - 1 > win_width then
+					win_width = #s
+					image_lines[i] = true
 				end
 
-				if not s:match('```') and s ~= '' then
+				if not s:match('```') then
 					win_height = win_height + 1
 				end
 			end
@@ -165,28 +171,49 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 			end
 
 			adjust_width()
+			win_width = math.min(win_width, 100)
 
-			local divider = ''
-			for _ = 1, win_width do
-				divider = divider .. '─'
-			end
+			local divider = string.rep('─', win_width)
 
-			local encoded
-			for i = #docs, 1, -1 do
-				encoded = docs[i]:match('!%[[^%]]+%]')
-				if #docs[i] > win_width and not encoded then
-					win_height = win_height + math.ceil(#docs[i] / win_width) - 1
-				end
-
-				if encoded then
-					win_width = #encoded - 1
-				end
-				if docs[i] == '' then
+			local empty = false
+			local dividers = {}
+			local function format_line(i)
+				if docs[i] ~= '' then
+					empty = false
+				elseif docs[i] == '' and not empty then
+					empty = true
+					return
+				elseif docs[i] == '' and empty then
 					table.remove(docs, i)
+					win_height = win_height - 1
+					for j, _ in ipairs(dividers) do
+						dividers[j] = dividers[j] - 1
+					end
+					return
+				end
+
+				if #docs[i] > win_width and not image_lines[i] then
+					win_height = win_height + math.ceil(#docs[i] / win_width) - 1
 				end
 
 				if docs[i] == '---' then
 					docs[i] = divider
+					table.insert(dividers, i)
+				end
+			end
+
+			for i = #docs, 1, -1 do
+				format_line(i)
+			end
+
+			for _, i in ipairs(dividers) do
+				if docs[i + 1] == '' then
+					table.remove(docs, i + 1)
+					win_height = win_height - 1
+				end
+				if docs[i - 1] == '' then
+					table.remove(docs, i - 1)
+					win_height = win_height - 1
 				end
 			end
 

@@ -110,6 +110,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
 vim.api.nvim_create_autocmd('VimEnter', {
 	group = 'pack',
 	callback = function()
-		vim.defer_fn(PluginsUpdate, 1000)
+		vim.defer_fn(PluginsUpdate, 100)
 	end
 })
