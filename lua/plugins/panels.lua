@@ -1,6 +1,11 @@
 return {
 	src = 'RyanMash0/nvim-panels',
 	opts = {
+		filetree = {
+			hide = {
+				'**/.DS_Store',
+			}
+		},
 		layout = {
 			right = {
 				module = function() return require('nvim-panels.terminal') end,
