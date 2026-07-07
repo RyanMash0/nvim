@@ -20,6 +20,7 @@ vim.opt.undofile = true
 vim.opt.winborder = 'rounded'
 
 -- Completion menu
+vim.opt.complete = ''
 vim.opt.completeopt = {'menuone','noselect', 'fuzzy'}
 
 -- Popup menu
