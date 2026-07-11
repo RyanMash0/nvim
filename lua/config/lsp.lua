@@ -49,6 +49,7 @@ vim.api.nvim_create_augroup('lsp_treesitter', { clear = true })
 vim.api.nvim_create_autocmd('FileType', {
 	group = 'lsp_treesitter',
 	callback = function (args)
+		if not vim.g.loaded_nvim_treesitter then return end
 		local parsers = require('nvim-treesitter.parsers')
 		local lang = vim.treesitter.language.get_lang(args.match)
 		if lang == 'latex' then return end
