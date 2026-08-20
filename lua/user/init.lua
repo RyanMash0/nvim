@@ -1,16 +1,57 @@
 -------------------------------------------------------------------------------
 -- User Configs                                                              --
 -------------------------------------------------------------------------------
---- 	Add your configuration overrides in this directory, but note that
---- altering this file directly may cause issues with git.
---- 	Custom config files outside of the scope of keymaps and options should be
---- set in a file with the following path: /lua/user/custom.lua. You can either
---- write all configs in this custom.lua file, or you can use the custom.lua
---- file to link in other files of your choosing.
---- 	Also note that you can set your own leader key in a file with the path:
---- /lua/user/leader.lua. This leader.lua file will be the first file loaded on
---- start up, while all other configs defined in this directory will be loaded
---- last so that configuration overrides are possible.
+-- Add your configuration overrides in this directory, but note that
+-- altering this file directly may cause issues with git.
+--
+-- Custom config files outside of the scope of keymaps and options should be
+-- set in a file with the following path: /lua/user/custom.lua. You can either
+-- write all configs in this custom.lua file, or you can use the custom.lua
+-- file to link in other files of your choosing.
+--
+-- Also note that you can set your own leader key in a file with the path:
+-- /lua/user/leader.lua. This leader.lua file will be the first file loaded on
+-- start up, while all other configs defined in this directory will be loaded
+-- last so that configuration overrides are possible.
+--
+-- If you want to add your own plugins, then you should add your plugin setup 
+-- files to a directory with the path: /lua/user/plugins. The relevant fields
+-- for loading a plugin are the following:
+--
+--   src = 'owner/repo'      -- (required) end of the github url
+--
+--
+--   opts = {}               -- (optional) options passed into the plugin's own
+--                                         setup function
+--
+--   build = ''              -- (optional) anything here will be run after the
+--                                         plugin is set up as a vim command
+--
+--   config = function() end -- (optional) anything inside here will be run
+--                                         after the plugin is set up
+--
+-- Plugin files should consist only of a return statement that includes either
+-- a table with the fields listed above or a table of these tables. Below are
+-- examples which include only the required field for the sake of simplicity.
+-- 
+--  Example 1:
+-- -----------
+-- return {
+-- 	src = 'owner/repo',
+-- }
+--
+--
+--  Example 2:
+-- -----------
+-- return {
+--	{
+-- 		src = 'owner/repo',
+-- 	},
+--	{
+-- 		src = 'owner2/repo2',
+-- 	},
+-- 	...
+-- }
 
 pcall(require, 'user.keymaps')
 pcall(require, 'user.options')

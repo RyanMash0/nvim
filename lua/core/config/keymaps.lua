@@ -44,13 +44,32 @@ vim.keymap.set('i', '<BS>', function()
 end, { expr = true })
 
 -- Panels
-vim.keymap.set('n', L..'lo', '<Cmd>PanelsOpen<CR>')
-vim.keymap.set('n', L..'lc', '<Cmd>PanelsClose<CR>')
-vim.keymap.set('n', L..'ls', '<Cmd>PanelsShow<CR>')
-vim.keymap.set('n', L..'lh', '<Cmd>PanelsHide<CR>')
-vim.keymap.set('n', L..'lt', '<Cmd>PanelsToggleAll<CR>')
-vim.keymap.set('n', L..'lr', '<Cmd>PanelsReset<CR>')
-vim.keymap.set('n', L..'lR', '<Cmd>PanelsHardReset<CR>')
+vim.keymap.set('n', L..'po', '<Cmd>PanelsOpen<CR>')
+vim.keymap.set('n', L..'pc', '<Cmd>PanelsClose<CR>')
+vim.keymap.set('n', L..'ps', '<Cmd>PanelsShow<CR>')
+vim.keymap.set('n', L..'ph', '<Cmd>PanelsHide<CR>')
+vim.keymap.set('n', L..'pt', '<Cmd>PanelsToggleAll<CR>')
+vim.keymap.set('n', L..'pr', '<Cmd>PanelsReset<CR>')
+vim.keymap.set('n', L..'pR', '<Cmd>PanelsHardReset<CR>')
+
+local directions = {
+	left = 'l',
+	right = 'r',
+	top = 't',
+	bottom = 'b',
+}
+
+for key, val in pairs(directions) do
+	vim.keymap.set('n', L..'pT'..val, '<Cmd>PanelsToggle '..key..'<CR>')
+end
+
+for key1, val1 in pairs(directions) do
+	for key2, val2 in pairs(directions) do
+		if key1 ~= key2 then
+			vim.keymap.set('n', L..'pS'..val1..val2, '<Cmd>PanelsSwap '..key1..' '..key2..'<CR>')
+		end
+	end
+end
 
 -- Explore
 vim.keymap.set('n', L..'e', '<Cmd>Ex<CR>')

@@ -3,10 +3,11 @@
 -------------------------------------------------------------------------------
 table.unpack = table.unpack or unpack
 
-local plugin_dir = 'core/plugins'
-local full_dir = vim.fs.joinpath('lua', plugin_dir)
 local config_dir = vim.fn.stdpath('config')
-full_dir = vim.fs.joinpath(config_dir, full_dir)
+local lua_path_core = 'core.plugins'
+local lua_path_user = 'user.plugins'
+local path_core = vim.fs.joinpath(config_dir, 'lua', 'core', 'plugins')
+local path_user = vim.fs.joinpath(config_dir, 'lua', 'user', 'plugins')
 Plugins = {}
 local names = {}
 
@@ -44,20 +45,26 @@ local function plugins_setup(self)
 	end
 end
 
-local plugin_files = vim.fs.find(function(name)
-	return name:match('%.lua$') and true or false
-end, {
-	limit = math.huge,
-	type = 'file',
-	path = full_dir,
-})
+local function find_func()
+	return function(name)
+		return name:match('%.lua$') and true or false
+	end
+end
 
-local path_str
-local plugin_file
+local function get_find_opts(path)
+	return {
+		limit = math.huge,
+		type = 'file',
+		path = path,
+	}
+end
+
+local plugin_files = vim.fs.find(find_func(), get_find_opts(path_core))
+local temp_files = vim.fs.find(find_func(), get_find_opts(path_user))
+vim.list_extend(plugin_files, temp_files)
+
 for _, path in ipairs(plugin_files) do
-	path_str = plugin_dir .. '.' .. vim.fs.basename(path):match('^[^%.]+')
-	plugin_file = require(path_str)
-	add_plugin_from_file(Plugins, plugin_file)
+	add_plugin_from_file(Plugins, dofile(path))
 end
 
 for _, plugin in ipairs(Plugins) do
