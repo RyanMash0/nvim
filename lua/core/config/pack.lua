@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 table.unpack = table.unpack or unpack
 
-local plugin_dir = 'plugins'
+local plugin_dir = 'core/plugins'
 local full_dir = vim.fs.joinpath('lua', plugin_dir)
 local config_dir = vim.fn.stdpath('config')
 full_dir = vim.fs.joinpath(config_dir, full_dir)
@@ -91,7 +91,6 @@ vim.api.nvim_create_user_command('PluginsAdd',
 	{ nargs = 0 }
 )
 
--- vim.pack.get()
 vim.api.nvim_create_user_command('PluginsUpdate',
 	function()
 		PluginsUpdate()

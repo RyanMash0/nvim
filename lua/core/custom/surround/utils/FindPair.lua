@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 -- Find Pair Utility                                                         --
 -------------------------------------------------------------------------------
-require('custom.utils.MakeSurround')
+require('core.custom.surround.utils.MakeSurround')
 
 
 function FindPair(chars)

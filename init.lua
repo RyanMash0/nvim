@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
--- Neovim Config File                                                        --
+-- Neovim Config                                                             --
 -------------------------------------------------------------------------------
 local leader_status, _ = pcall(require, 'user.leader')
 if not leader_status or vim.g.mapleader == nil then
@@ -9,44 +9,13 @@ if not leader_status or vim.g.mapleader == nil then
 end
 
 -------------------------------------------------------------------------------
--- Standard Configs                                                          --
+-- Core Configs                                                              --
 -------------------------------------------------------------------------------
-
-package.loaded['config.pack'] = nil
-package.loaded['config.keymaps'] = nil
-package.loaded['config.options'] = nil
-package.loaded['config.lsp'] = nil
-package.loaded['config.completion'] = nil
-package.loaded['config.ui'] = nil
-
-require('config.pack')
-require('config.keymaps')
-require('config.options')
-require('config.lsp')
-require('config.completion')
-require('config.ui')
-
--------------------------------------------------------------------------------
--- Custom Plugins                                                            --
--------------------------------------------------------------------------------
-
-package.loaded['custom.PostSurround'] = nil
-package.loaded['custom.PreSurround'] = nil
-package.loaded['custom.DeleteSurround'] = nil
-package.loaded['custom.ChangeSurround'] = nil
-package.loaded['custom.TextObjMotion'] = nil
-package.loaded['custom.Reload'] = nil
-
-require('custom.PostSurround')
-require('custom.PreSurround')
-require('custom.DeleteSurround')
-require('custom.ChangeSurround')
-require('custom.TextObjMotion')
-require('custom.Reload')
+package.loaded['core'] = nil
+require('core')
 
 ------------------------------------------------------------------------------
 -- User Configs                                                             --
 ------------------------------------------------------------------------------
 package.loaded['user'] = nil
-
-vim.defer_fn(function () require('user') end, 10)
+vim.defer_fn(function () require('user') end, 100)

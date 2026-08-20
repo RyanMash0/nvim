@@ -1,10 +1,10 @@
 -------------------------------------------------------------------------------
 -- LSP Completion Menu Config                                                --
 -------------------------------------------------------------------------------
-require('config.lsp')
-require('config.completion_utils.compare')
-require('config.completion_utils.convert')
-local state = require('config.completion_utils.state')
+require('core.config.lsp')
+require('core.config.completion_utils.compare')
+require('core.config.completion_utils.convert')
+local state = require('core.config.completion_utils.state')
 
 --- Autocommand to customize completion whenever an lsp recognizes a file
 vim.api.nvim_create_augroup('lsp_completion', { clear = true })

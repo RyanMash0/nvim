@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 -- PreSurround Plugin                                                        --
 -------------------------------------------------------------------------------
-require('custom.utils.MakeSurround')
+require('core.custom.surround.utils.MakeSurround')
 
 local surround = vim.api.nvim_create_namespace('surround_ops')
 vim.api.nvim_set_hl(surround, 'NormalFloat', { ctermbg = 'none', })

@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 -- PostSurround Plugin                                                       --
 -------------------------------------------------------------------------------
-require('custom.utils.MakeSurround')
-require('custom.utils.GetInput')
+require('core.custom.surround.utils.MakeSurround')
+require('core.custom.surround.utils.GetInput')
 
 function PostSurround(chars)
 	local col_start = vim.api.nvim_buf_get_mark(0, "[")[2]

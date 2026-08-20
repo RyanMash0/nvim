@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 -- DeleteSurround Plugin                                                     --
 -------------------------------------------------------------------------------
-require('custom.utils.FindPair')
-require('custom.utils.GetInput')
+require('core.custom.surround.utils.FindPair')
+require('core.custom.surround.utils.GetInput')
 
 function DeleteSurround()
 	local chars = GetInput('Delete surrounding')

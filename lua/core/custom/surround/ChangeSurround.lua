@@ -1,9 +1,9 @@
 -------------------------------------------------------------------------------
 -- ChangeSurround Plugin                                                     --
 -------------------------------------------------------------------------------
-require('custom.utils.FindPair')
-require('custom.utils.MakeSurround')
-require('custom.utils.GetInput')
+require('core.custom.surround.utils.FindPair')
+require('core.custom.surround.utils.MakeSurround')
+require('core.custom.surround.utils.GetInput')
 
 function ChangeSurround()
 	local chars = GetInput('Change')
