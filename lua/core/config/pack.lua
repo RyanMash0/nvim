@@ -8,7 +8,6 @@ local full_dir = vim.fs.joinpath('lua', plugin_dir)
 local config_dir = vim.fn.stdpath('config')
 full_dir = vim.fs.joinpath(config_dir, full_dir)
 Plugins = {}
-PluginsPre = {}
 local names = {}
 
 local function add_plugin_from_file(self, file)
@@ -58,11 +57,7 @@ local plugin_file
 for _, path in ipairs(plugin_files) do
 	path_str = plugin_dir .. '.' .. vim.fs.basename(path):match('^[^%.]+')
 	plugin_file = require(path_str)
-	if plugin_file.preload then
-		add_plugin_from_file(PluginsPre, plugin_file)
-	else
-		add_plugin_from_file(Plugins, plugin_file)
-	end
+	add_plugin_from_file(Plugins, plugin_file)
 end
 
 for _, plugin in ipairs(Plugins) do
@@ -71,9 +66,6 @@ for _, plugin in ipairs(Plugins) do
 		install_deps(plugin.dependencies, Plugins)
 	end
 end
-
-vim.pack.add(PluginsPre)
-plugins_setup(PluginsPre)
 
 function PluginsAdd()
 	vim.pack.add(Plugins)
