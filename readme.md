@@ -1,13 +1,13 @@
 # Ryan Mash's Neovim Config
 
-This config is designed for neovim v0.12.0-dev-1860 or later.
+This config is designed for neovim v0.12.0 or later.
 
 ## Requirements
 ### Plugins
 | Plugin          | Package(s)      |
 | --------------- | --------------- |
 | nvim-treesitter | tree-sitter-cli |
-| nvim-telescope  | ripgrep         |
+| nvim-telescope  | ripgrep, fd     |
 | vimtex          | texlive         |
 
 
@@ -20,6 +20,7 @@ This config is designed for neovim v0.12.0-dev-1860 or later.
 | Python     | pyright                    |
 | LaTeX      | texlab                     |
 | Typescript | typescript-language-server |
+| Markdown   | marksman                   |
 
 
 ## Installation
@@ -52,3 +53,6 @@ Paste this line into your terminal to automatically install requirements through
 
 ### WSL and Other Linux Distributions
 There are currently no other installation scripts, but everything needed is listed in the requirements section.
+
+## Configuring
+If you wish to add your own configurations, you should do so in the `./lua/user` directory. There are instructions for how to do this in the `./lua/user/init.lua` file. I use the dvorak keyboard layout, so the default leader key is "," (comma). For this reason, it is highly recommended to read the instructions for adding your own configurations, at least to set up your own leader key. If you do not set your leader key in the outlined manner, then none of the predefined keymaps will work. 

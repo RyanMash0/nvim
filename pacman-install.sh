@@ -5,7 +5,7 @@
 # --------------------------------------------------------------------------- #
 
 # Neovim:
-yay -Syu --needed neovim-nightly-bin
+sudo pacman -Sy --needed neovim
 
 # Packages:
 sudo pacman -Sy --needed tree-sitter-cli
@@ -20,6 +20,7 @@ sudo pacman -Sy --needed lua-language-server
 sudo pacman -Sy --needed pyright
 sudo pacman -Sy --needed texlab
 sudo pacman -Sy --needed typescript-language-server
+sudo pacman -Sy --needed marksman
 
 # PDF Viewer for LaTeX:
 sudo pacman -Sy --needed zathura
@@ -33,4 +34,4 @@ sudo pacman -Sy --needed zathura-pdf-mupdf
 # sudo pacman -Sy --needed alacritty
 
 # Font:
-# sudo pacman -Sy --needed ttf-hack-nerd
+# sudo pacman -Sy --needed otf-commit-mono-nerd

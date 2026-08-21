@@ -6,9 +6,6 @@
 
 # Neovim:
 brew install neovim
-brew unlink neovim
-brew install neovim --HEAD
-brew link neovim --HEAD
 
 # Packages:
 brew install tree-sitter-cli
@@ -23,6 +20,7 @@ brew install lua-language-server
 brew install pyright
 brew install texlab
 brew install typescript-language-server
+brew install marksman
 
 # PDF Viewer for LaTeX:
 # Skim (https://skim-app.sourceforge.io)
