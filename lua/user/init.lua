@@ -4,19 +4,19 @@
 -- Add your configuration overrides in this directory, but note that
 -- altering this file directly may cause issues with git.
 --
--- Custom config files outside of the scope of keymaps and options should be
--- set in a file with the following path: /lua/user/custom.lua. You can either
--- write all configs in this custom.lua file, or you can use the custom.lua
--- file to link in other files of your choosing.
+-- Custom configs outside of the scope of keymaps and options should be set in
+-- a file with the following path: <config_dir>/lua/user/custom.lua. You can
+-- either write all configs in this custom.lua file, or you can use the
+-- custom.lua file to link in other files of your choosing.
 --
 -- Also note that you can set your own leader key in a file with the path:
--- /lua/user/leader.lua. This leader.lua file will be the first file loaded on
--- start up, while all other configs defined in this directory will be loaded
--- last so that configuration overrides are possible.
+-- <config_dir>/lua/user/leader.lua. This leader.lua file will be the first
+-- file loaded on start up, while all other configs defined in this directory
+-- will be loaded last so that configuration overrides are possible.
 --
 -- If you want to add your own plugins, then you should add your plugin setup 
--- files to a directory with the path: /lua/user/plugins. The relevant fields
--- for loading a plugin are the following:
+-- files to a directory with the path: <config_dir>/lua/user/plugins. The
+-- relevant fields for loading a plugin are the following:
 --
 --   src = 'owner/repo'      -- (required) end of the github url
 --
@@ -52,6 +52,13 @@
 -- 	},
 -- 	...
 -- }
+--
+-- If you wish to remove default keymaps, you can simply use the vim.keymap.del
+-- function to do so. Default options are also easy to change or reset. If you
+-- want to remove any of the default plugins, then you should create a file
+-- with the path: <config_dir>/lua/user/plugins/remove.lua. You should format 
+-- this file in the same way as the other files in the plugin directory, but
+-- note that only the 'src' field of each entry will be read.
 
 pcall(require, 'user.keymaps')
 pcall(require, 'user.options')

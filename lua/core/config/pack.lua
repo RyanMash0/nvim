@@ -3,18 +3,36 @@
 -------------------------------------------------------------------------------
 table.unpack = table.unpack or unpack
 
+local url_prefix = 'https://www.github.com/'
+
 local config_dir = vim.fn.stdpath('config')
-local lua_path_core = 'core.plugins'
-local lua_path_user = 'user.plugins'
 local path_core = vim.fs.joinpath(config_dir, 'lua', 'core', 'plugins')
 local path_user = vim.fs.joinpath(config_dir, 'lua', 'user', 'plugins')
-Plugins = {}
+
+local remove_fname = 'remove.lua'
+local remove_path = vim.fs.joinpath(path_user, remove_fname)
+local success, remove_data = pcall(dofile, remove_path)
+if not success then remove_data = nil end
+local remove = {}
+
+local plugins = {}
 local names = {}
 
+local function populate_remove_tbl()
+	if not remove_data then return end
+	if remove_data.src then remove[remove_data.src] = true return end
+	for _, plugin in ipairs(remove_data) do
+		remove[plugin.src] = true
+	end
+end
+
 local function add_plugin_from_file(self, file)
-	if file.src then self[#self+1] = file return end
+	if not file then return end
+	if file.src and not remove[file.src] then self[#self+1] = file return end
 	for _, plugin in ipairs(file) do
-		self[#self+1] = plugin
+		if not remove[plugin.src] then
+			self[#self+1] = plugin
+		end
 	end
 end
 
@@ -26,7 +44,7 @@ end
 
 local function format_config(plugin)
 	plugin.name = plugin.src:match('[^/]+$')
-	plugin.src = 'https://www.github.com/' .. plugin.src
+	plugin.src = url_prefix .. plugin.src
 end
 
 local function plugins_setup(self)
@@ -61,22 +79,30 @@ end
 
 local plugin_files = vim.fs.find(find_func(), get_find_opts(path_core))
 local temp_files = vim.fs.find(find_func(), get_find_opts(path_user))
+for i, path in ipairs(temp_files) do
+	if path:match(remove_fname) then
+		table.remove(temp_files, i)
+		break
+	end
+end
 vim.list_extend(plugin_files, temp_files)
 
+populate_remove_tbl()
+
 for _, path in ipairs(plugin_files) do
-	add_plugin_from_file(Plugins, dofile(path))
+	add_plugin_from_file(plugins, dofile(path))
 end
 
-for _, plugin in ipairs(Plugins) do
+for _, plugin in ipairs(plugins) do
 	format_config(plugin)
 	if plugin.dependencies then
-		install_deps(plugin.dependencies, Plugins)
+		install_deps(plugin.dependencies, plugins)
 	end
 end
 
 function PluginsAdd()
-	vim.pack.add(Plugins)
-	plugins_setup(Plugins)
+	vim.pack.add(plugins)
+	plugins_setup(plugins)
 end
 
 function PluginsUpdate()
