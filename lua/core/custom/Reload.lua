@@ -22,6 +22,19 @@ function (args)
 end,
 { nargs = '?' })
 
+vim.api.nvim_create_user_command('Save',
+function (args)
+	local path
+	if args.args == '' then
+		path = def_path
+	else
+		path = vim.fs.joinpath(dir, args.args .. '.vim')
+	end
+
+	vim.cmd('mksession! ' .. path)
+end,
+{ nargs = '?' })
+
 vim.api.nvim_create_user_command('Load',
 function (args)
 	local path
