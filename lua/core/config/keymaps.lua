@@ -17,6 +17,7 @@ local function toggle_hints()
 end
 
 vim.keymap.set('n', 'gd', function () vim.lsp.buf.definition() end)
+vim.keymap.set('n', 'gA', function () vim.lsp.buf.code_action() end)
 vim.keymap.set('n', 'gi', toggle_hints)
 
 -- Completion

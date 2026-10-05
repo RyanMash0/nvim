@@ -1,7 +1,10 @@
 -------------------------------------------------------------------------------
 -- LSP Config                                                                --
 -------------------------------------------------------------------------------
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({
+	virtual_text = false,
+	virtual_lines = true,
+})
 
 local no_opts = {}
 
