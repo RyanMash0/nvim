@@ -31,18 +31,7 @@ require('vim._core.ui2').enable({
 			wildlist = 'cmd',
 			wmsg = 'msg',
 		},
-		cmd = {
-			height = 0.5, -- default
-		},
-		dialog = {
-			height = 0.5, -- default
-		},
-		msg = {
-			height = 0.5, -- default
-			timeout = 5000, -- default: 4000
-		},
-		pager = {
-			height = 0.5, -- default: 0.999
-		},
 	},
 })
+
+vim.opt.messagesopt:append({ 'maxheight:25', 'timeout:5000' })
