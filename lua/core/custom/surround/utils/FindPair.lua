@@ -68,7 +68,7 @@ function FindPair(chars)
 		ePos = vim.fn.searchpos(surChars[1], fPairFlags)
 
 		if ePos[1] == 0 and ePos[2] == 0 then
-			return print("No matching character found")
+			return print("Error: No matching pair found")
 		end
 
 		vim.api.nvim_win_set_cursor(0, {ePos[1], ePos[2] - 1})
@@ -87,7 +87,7 @@ function FindPair(chars)
 
 	if ePos[1] == 0 and ePos[2] == 0 then
 		vim.cmd.redraw()
-		return print("No matching character found")
+		return print("Error: No matching pair found")
 	end
 
 	vim.api.nvim_win_set_cursor(0, {ePos[1], ePos[2] - 1})
@@ -96,7 +96,7 @@ function FindPair(chars)
 
 	if sPos[1] == 0 and sPos[2] == 0 then
 		vim.cmd.redraw()
-		return print("No matching character found")
+		return print("Error: No matching pair found")
 	end
 
 	return makeRet()
