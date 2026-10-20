@@ -94,7 +94,7 @@ vim.keymap.set('n', L..'ds', ':DeleteSurround<CR>')
 vim.keymap.set('n', L..'cs', ':ChangeSurround<CR>')
 
 -- Color Column
-vim.keymap.set('n', L..'c+', ':set colorcolumn=80<CR>')
+vim.keymap.set('n', L..'c+', ':set colorcolumn=80,100<CR>')
 vim.keymap.set('n', L..'c-', ':set colorcolumn=0<CR>')
 
 -- Telescope
