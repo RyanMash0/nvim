@@ -172,6 +172,7 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 
 			adjust_width()
 			win_width = math.min(win_width, 100)
+			win_width = math.max(win_width, 1)
 
 			local divider = string.rep('─', win_width)
 
@@ -216,6 +217,7 @@ vim.api.nvim_create_autocmd('CompleteChanged', {
 					win_height = win_height - 1
 				end
 			end
+			win_height = math.max(win_height, 1)
 
 			vim.bo[state.pum_docs_buf].modifiable = true
 			vim.api.nvim_buf_set_text(state.pum_docs_buf, 0, 0, -1, -1, docs)
