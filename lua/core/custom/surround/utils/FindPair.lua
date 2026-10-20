@@ -66,6 +66,11 @@ function FindPair(chars)
 		end
 
 		ePos = vim.fn.searchpos(surChars[1], fPairFlags)
+
+		if ePos[1] == 0 and ePos[2] == 0 then
+			return print("No matching character found")
+		end
+
 		vim.api.nvim_win_set_cursor(0, {ePos[1], ePos[2] - 1})
 		sPos = vim.fn.searchpos(surChars[2], bPairFlags)
 		return makeRet()
