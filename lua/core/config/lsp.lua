@@ -2,8 +2,17 @@
 -- LSP Config                                                                --
 -------------------------------------------------------------------------------
 vim.diagnostic.config({
-	virtual_text = false,
-	virtual_lines = true,
+	virtual_text = {
+		severity = {
+			vim.diagnostic.severity.HINT,
+		}
+	},
+	virtual_lines = {
+		severity = {
+			min = vim.diagnostic.severity.INFO,
+			max = vim.diagnostic.severity.ERROR,
+		}
+	},
 })
 
 local no_opts = {}
